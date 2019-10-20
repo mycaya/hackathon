@@ -194,10 +194,12 @@ app.get('/auth/snapchat', passport.authenticate('snapchat'));
 app.get('/auth/snapchat/callback', passport.authenticate('snapchat', { failureRedirect: '/login' }), (req, res) => {
   res.redirect(req.session.returnTo || '/');
 });
-app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile'] }));
+/* app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile'] }));
 app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
   res.redirect(req.session.returnTo || '/');
-});
+}); */
+app.get('/auth/facebook/callback', passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/' }));
+
 app.get('/auth/github', passport.authenticate('github'));
 app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), (req, res) => {
   res.redirect(req.session.returnTo || '/');
