@@ -121,8 +121,8 @@ passport.use(new SnapchatStrategy({
  * Sign in with Facebook.
  */
 passport.use(new FacebookStrategy({
-  clientID: process.env.FACEBOOK_ID,
-  clientSecret: process.env.FACEBOOK_SECRET,
+  clientID: '2424070964534047',
+  clientSecret: '2424070964534047',
   callbackURL: `${process.env.BASE_URL}/auth/facebook/callback`,
   profileFields: ['name', 'email', 'link', 'locale', 'timezone', 'gender'],
   passReqToCallback: true
@@ -297,7 +297,7 @@ passport.use(new TwitterStrategy({
 const googleStrategyConfig = new GoogleStrategy({
   clientID: process.env.GOOGLE_ID,
   clientSecret: process.env.GOOGLE_SECRET,
-  callbackURL: '/auth/google/callback',
+  callbackURL: '/google/callback',
   passReqToCallback: true
 }, (req, accessToken, refreshToken, params, profile, done) => {
   if (req.user) {
