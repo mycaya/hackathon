@@ -1,5 +1,5 @@
 const passport = require('passport');
-const refresh = require('passport-oauth2-refresh');
+// const refresh = require('passport-oauth2-refresh');
 const axios = require('axios');
 const { Strategy: InstagramStrategy } = require('passport-instagram');
 const { Strategy: LocalStrategy } = require('passport-local');
@@ -31,7 +31,7 @@ passport.deserializeUser((id, done) => {
 
 /**
  * Sign in using Email and Password.
- */
+
 passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
   User.findOne({ email: email.toLowerCase() }, (err, user) => {
     if (err) { return done(err); }
@@ -50,6 +50,7 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
     });
   });
 }));
+*/
 
 /**
  * OAuth Strategy Overview
@@ -68,7 +69,7 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
 
 /**
  * Sign in with Snapchat.
- */
+
 passport.use(new SnapchatStrategy({
   clientID: process.env.SNAPCHAT_ID,
   clientSecret: process.env.SNAPCHAT_SECRET,
@@ -118,14 +119,11 @@ passport.use(new SnapchatStrategy({
     });
   }
 }));
-
-/**
- * Sign in with Facebook.
  */
+
 passport.use(new FacebookStrategy({
   clientID: '2424070964534047',
   clientSecret: '2424070964534047',
-  //callbackURL: `${process.env.BASE_URL}/auth/facebook/callback`,
   callbackURL: 'https://figeur.com/auth/facebook/callback',
   profileFields: ['name', 'email', 'link', 'locale', 'timezone', 'gender'],
   passReqToCallback: true
@@ -181,8 +179,68 @@ passport.use(new FacebookStrategy({
 }));
 
 /**
- * Sign in with GitHub.
+ * Sign in with Facebook.
+
+passport.use(new FacebookStrategy({
+  clientID: configAuth.facebookAuth.clientID,
+  clientSecret: configAuth.facebookAuth.clientSecret,
+  callbackURL: 'https://figeur.com/auth/facebook/callback',
+  profileFields: ['name', 'email', 'link', 'locale', 'timezone', 'gender'],
+  passReqToCallback: true
+}, (req, accessToken, refreshToken, profile, done) => {
+  if (req.user) {
+    User.findOne({ facebook: profile.id }, (err, existingUser) => {
+      if (err) { return done(err); }
+      if (existingUser) {
+        req.flash('errors', { msg: 'There is already a Facebook account that belongs to you. Sign in with that account or delete it, then link it with your current account.' });
+        done(err);
+      } else {
+        User.findById(req.user.id, (err, user) => {
+          if (err) { return done(err); }
+          user.facebook = profile.id;
+          user.tokens.push({ kind: 'facebook', accessToken });
+          user.profile.name = user.profile.name || `${profile.name.givenName} ${profile.name.familyName}`;
+          user.profile.gender = user.profile.gender || profile._json.gender;
+          user.profile.picture = user.profile.picture || `https://graph.facebook.com/${profile.id}/picture?type=large`;
+          user.save((err) => {
+            req.flash('info', { msg: 'Facebook account has been linked.' });
+            done(err, user);
+          });
+        });
+      }
+    });
+  } else {
+    User.findOne({ facebook: profile.id }, (err, existingUser) => {
+      if (err) { return done(err); }
+      if (existingUser) {
+        return done(null, existingUser);
+      }
+      User.findOne({ email: profile._json.email }, (err, existingEmailUser) => {
+        if (err) { return done(err); }
+        if (existingEmailUser) {
+          req.flash('errors', { msg: 'There is already an account using this email address. Sign in to that account and link it with Facebook manually from Account Settings.' });
+          done(err);
+        } else {
+          const user = new User();
+          user.email = profile._json.email;
+          user.facebook = profile.id;
+          user.tokens.push({ kind: 'facebook', accessToken });
+          user.profile.name = `${profile.name.givenName} ${profile.name.familyName}`;
+          user.profile.gender = profile._json.gender;
+          user.profile.picture = `https://graph.facebook.com/${profile.id}/picture?type=large`;
+          user.profile.location = (profile._json.location) ? profile._json.location.name : '';
+          user.save((err) => {
+            done(err, user);
+          });
+        }
+      });
+    });
+  }
+}));
  */
+/**
+ * Sign in with GitHub.
+
 passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_ID,
   clientSecret: process.env.GITHUB_SECRET,
@@ -239,10 +297,11 @@ passport.use(new GitHubStrategy({
     });
   }
 }));
+ */
 
 /**
  * Sign in with Twitter.
- */
+
 passport.use(new TwitterStrategy({
   consumerKey: process.env.TWITTER_KEY,
   consumerSecret: process.env.TWITTER_SECRET,
@@ -293,14 +352,62 @@ passport.use(new TwitterStrategy({
     });
   }
 }));
-
-/**
- * Sign in with Google.
  */
-const googleStrategyConfig = new GoogleStrategy({
+
+passport.use(new GoogleStrategy({
+
   clientID: '737194955216-l3ajm9cqmnk60f0e30pjtg6vuu5ms003.apps.googleusercontent.com',
   clientSecret: 'Gl0y4_KjhUk47-6nw4U89aDE',
   callbackURL: configAuth.googleAuth.callbackURL,
+
+},
+function(token, refreshToken, profile, done) {
+
+  // make the code asynchronous
+  // User.findOne won't fire until we have all our data back from Google
+  process.nextTick(function() {
+
+     // try to find the user based on their google id
+     User.findOne({
+        'google.id': profile.id
+     }, function(err, user) {
+        if (err)
+           return done(err);
+
+        if (user) {
+
+           // if a user is found, log them in
+           return done(null, user);
+        } else {
+           // if the user isnt in our database, create a new user
+           var newUser = new User();
+
+           // set all of the relevant information
+           newUser.google.id = profile.id;
+           newUser.google.token = token;
+           newUser.google.name = profile.displayName;
+           newUser.google.email = profile.emails[0].value; // pull the first email
+
+           // save the user
+           newUser.save(function(err) {
+              if (err)
+                 throw err;
+              return done(null, newUser);
+           });
+        }
+     });
+  });
+
+}));
+
+
+/**
+ * Sign in with Google.
+
+const googleStrategyConfig = new GoogleStrategy({
+  clientID: process.env.GOOGLE_ID,
+  clientSecret: process.env.GOOGLE_SECRET,
+  callbackURL: 'http://figeur.com/auth/google/callback',
   passReqToCallback: true
 }, (req, accessToken, refreshToken, params, profile, done) => {
   if (req.user) {
@@ -361,12 +468,13 @@ const googleStrategyConfig = new GoogleStrategy({
     });
   }
 });
-passport.use('google', googleStrategyConfig);
-refresh.use('google', googleStrategyConfig);
+*/
+//passport.use('google', googleStrategyConfig);
+// refresh.use('google', googleStrategyConfig);
 
 /**
  * Sign in with LinkedIn.
- */
+
 passport.use(new LinkedInStrategy({
   clientID: process.env.LINKEDIN_ID,
   clientSecret: process.env.LINKEDIN_SECRET,
@@ -421,10 +529,11 @@ passport.use(new LinkedInStrategy({
     });
   }
 }));
+ */
 
 /**
  * Sign in with Instagram.
- */
+
 passport.use(new InstagramStrategy({
   clientID: process.env.INSTAGRAM_ID,
   clientSecret: process.env.INSTAGRAM_SECRET,
@@ -474,10 +583,11 @@ passport.use(new InstagramStrategy({
     });
   }
 }));
+ */
 
 /**
  * Tumblr API OAuth.
- */
+
 passport.use('tumblr', new OAuthStrategy({
   requestTokenURL: 'https://www.tumblr.com/oauth/request_token',
   accessTokenURL: 'https://www.tumblr.com/oauth/access_token',
@@ -499,7 +609,7 @@ passport.use('tumblr', new OAuthStrategy({
 
 /**
  * Foursquare API OAuth.
- */
+
 passport.use('foursquare', new OAuth2Strategy({
   authorizationURL: 'https://foursquare.com/oauth2/authorize',
   tokenURL: 'https://foursquare.com/oauth2/access_token',
@@ -520,7 +630,7 @@ passport.use('foursquare', new OAuth2Strategy({
 
 /**
  * Steam API OpenID.
- */
+
 passport.use(new OpenIDStrategy({
   apiKey: process.env.STEAM_KEY,
   providerURL: 'http://steamcommunity.com/openid',
@@ -580,7 +690,7 @@ passport.use(new OpenIDStrategy({
 
 /**
  * Pinterest API OAuth.
- */
+
 passport.use('pinterest', new OAuth2Strategy({
   authorizationURL: 'https://api.pinterest.com/oauth/',
   tokenURL: 'https://api.pinterest.com/v1/oauth/token',
@@ -601,7 +711,7 @@ passport.use('pinterest', new OAuth2Strategy({
 
 /**
  * Intuit/QuickBooks API OAuth.
- */
+
 const quickbooksStrategyConfig = new OAuth2Strategy({
   authorizationURL: 'https://appcenter.intuit.com/connect/oauth2',
   tokenURL: 'https://oauth.platform.intuit.com/oauth2/v1/tokens/bearer',
@@ -671,26 +781,7 @@ exports.isAuthorized = (req, res, next) => {
       if (token.refreshToken) {
         if (token.refreshTokenExpires && moment(token.refreshTokenExpires).isBefore(moment().subtract(1, 'minutes'))) {
           res.redirect(`/auth/${provider}`);
-        } else {
-          refresh.requestNewAccessToken(`${provider}`, token.refreshToken, (err, accessToken, refreshToken, params) => {
-            User.findById(req.user.id, (err, user) => {
-              user.tokens.some((tokenObject) => {
-                if (tokenObject.kind === provider) {
-                  tokenObject.accessToken = accessToken;
-                  if (params.expires_in) tokenObject.accessTokenExpires = moment().add(params.expires_in, 'seconds').format();
-                  return true;
-                }
-                return false;
-              });
-              req.user = user;
-              user.markModified('tokens');
-              user.save((err) => {
-                if (err) console.log(err);
-                next();
-              });
-            });
-          });
-        }
+        } else res.redirect(`/auth/${provider}`);
       } else {
         res.redirect(`/auth/${provider}`);
       }
