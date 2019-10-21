@@ -124,7 +124,7 @@ passport.use(new SnapchatStrategy({
  */
 passport.use(new FacebookStrategy({
   clientID: '2424070964534047',
-  clientSecret: '2424070964534047',
+  clientSecret: 'f1655295e9339e1ced5268a05efb4983',
   //callbackURL: `${process.env.BASE_URL}/auth/facebook/callback`,
   callbackURL: 'https://figeur.com/auth/facebook/callback',
   profileFields: ['name', 'email', 'link', 'locale', 'timezone', 'gender'],
