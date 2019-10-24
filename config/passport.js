@@ -298,8 +298,8 @@ passport.use(new TwitterStrategy({
  * Sign in with Google.
  */
 const googleStrategyConfig = new GoogleStrategy({
-  clientID: '737194955216-l3ajm9cqmnk60f0e30pjtg6vuu5ms003.apps.googleusercontent.com',
-  clientSecret: 'Gl0y4_KjhUk47-6nw4U89aDE',
+  clientID: '1000932971726-1lghkjfu5g6qt23ddt44nm09eb5rvqik.apps.googleusercontent.com',
+  clientSecret: 'tQgbkLUYRo1r0F9kUH4UerlE',
   callbackURL: configAuth.googleAuth.callbackURL,
   passReqToCallback: true
 }, (req, accessToken, refreshToken, params, profile, done) => {

@@ -12,10 +12,16 @@ module.exports = {
     },
 
     'googleAuth': {
+        'clientID': '1000932971726-1lghkjfu5g6qt23ddt44nm09eb5rvqik.apps.googleusercontent.com', // your Client ID
+        'clientSecret': 'tQgbkLUYRo1r0F9kUH4UerlE', // your Client Secret
+        'callbackURL': 'http://figeur.com/auth/google/callback'
+    } /*
+
+    'googleAuth': {
         'clientID': '737194955216-l3ajm9cqmnk60f0e30pjtg6vuu5ms003.apps.googleusercontent.com', // your Client ID
         'clientSecret': 'Gl0y4_KjhUk47-6nw4U89aDE', // your Client Secret
         'callbackURL': 'http://figeur.com/auth/google/callback'
-    } /*,
+    } ,
 
     // 'instagramAuth': {
     //     'clientID': '',
