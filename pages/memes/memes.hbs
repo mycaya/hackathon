@@ -109,28 +109,6 @@
 		  </div>
 		</div>
 	  </div>
-	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script>
-$(document).ready(function () {
-	$("button").click(function() {
-	$.get('test.txt', function(data, status) {
-		$("#image-template").html(data);
-		alert(status);
-	})
-	});
-});
-</script>
-<br>
-<br>
-<button>Click</button>
-<br>
-<br><br>
-<br><br>
-<br>
-<p id="image-template"></p>
-<div id="users"></div>
-
-<script id="image-template" type="text/x-handlebars-template">
 	{{#each items}}
 	  	<div style="background-color: #e0e0e0" class="wrapper style2">
 			<article id="main" class="imgcontainer special">
@@ -138,9 +116,6 @@ $(document).ready(function () {
 			</article>
 		</div>
 	{{/each}}
-</script>
-
-
 	<!-- Optional JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
 
