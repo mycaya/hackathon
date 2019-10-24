@@ -23,6 +23,7 @@ Quickbooks.setOauthVersion('2.0');
  * List of API examples.
  */
 exports.getApi = (req, res) => {
+  console.log(req.user);
   res.render('api/index', {
     title: 'API Examples'
   });

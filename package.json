@@ -1,19 +1,12 @@
 {
-  "name": "hackathon-starter",
-  "version": "5.2.0",
-  "description": "A boilerplate for Node.js web applications",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sahat/hackathon-starter.git"
-  },
-  "license": "MIT",
-  "author": "Sahat Yalkabov",
-  "contributors": [
-    "Yashar Fakhari (https://github.com/YasharF)"
-  ],
+  "name": "Figeur",
+  "version": "1.0.0",
+  "description": "Github for Art",
+  "author": "Micaiah Mackenzie",
+  "license": "ISC",
   "scripts": {
     "postinstall": "npm rebuild node-sass",
-    "start": "node app.js",
+    "start": "nodemon app.js",
     "test": "nyc mocha --timeout=10000 --exit",
     "lint": "eslint \"**/*.js\""
   },
@@ -76,7 +69,12 @@
     "tumblr.js": "^2.0.2",
     "twilio": "^3.33.3",
     "twit": "^2.2.11",
-    "validator": "^11.1.0"
+    "validator": "^11.1.0",
+    "aws-sdk": "^2.205.0",
+    "hbs": "^4.0.4",
+    "mongodb": "^3.3.2",
+    "multer-s3": "^2.7.0",
+    "nodemon": "^1.19.2"
   },
   "devDependencies": {
     "chai": "^4.2.0",

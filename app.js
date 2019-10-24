@@ -21,6 +21,13 @@ const multer = require('multer');
 const https = require('https');
 const fs = require('fs');
 
+//Framework to display a web page
+var app = express();
+const router = express.Router();
+require('dotenv').config()
+
+var mongo = require('mongodb').MongoClient;
+
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
 /**
@@ -41,10 +48,6 @@ const contactController = require('./controllers/contact');
  */
 const passportConfig = require('./config/passport');
 
-/**
- * Create Express server.
- */
-const app = express();
 
 /**
  * Connect to MongoDB.
@@ -65,7 +68,7 @@ mongoose.connection.on('error', (err) => {
 app.set('host', process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0');
 app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 80);
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.set('view engine', 'hbs');
 app.use(expressStatusMonitor());
 app.use(compression());
 app.use(sass({
@@ -124,10 +127,66 @@ app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/bootstrap/d
 app.use('/js/lib', express.static(path.join(__dirname, 'node_modules/jquery/dist'), { maxAge: 31557600000 }));
 app.use('/webfonts', express.static(path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free/webfonts'), { maxAge: 31557600000 }));
 
+//Redirect all traffic to login untill ADFS federation
+app.get('/', (req, res) => {
+  res.redirect('/memes');
+});
+
+app.use(express.static('public'));
+
+//Pages
+
+const memes = require('./pages/memes/memes');
+app.use('/', memes);
+
+const test = require('./pages/test/test');
+app.use('/', test);
+
+const s3 = require('./pages/s3/s3');
+app.use('/', s3);
+
+const seo = require('./pages/seo/seo');
+app.use('/', seo);
+
+//APIs
+
+const fileupload = require('./apis/fileupload');
+app.use('/', fileupload);
+
+const memeshot = require('./apis/memeshot');
+app.use('/memeshot', memeshot);
+
+app.use(bodyParser.urlencoded())
+app.use(bodyParser.json())
+app.post('/catchr', function (req, res, next) {
+    console.log('Hit catchr: '+(req.body));
+    //res.send('Hit catchr: '+(JSON.stringify(req.body)));
+    res.send('Hit catchr: '+ JSON.stringify(req.body));
+})
+
+//var router = require('express').Router();
+app.get('/memeshot', function (req, res, next) {
+    console.log('memeshot: '+(req.body));
+    //res.send('Hit memeshot: '+ req.body);
+   //res.send('Hit catchr: '+(JSON.stringify(req.body)));
+    const url = 'mongodb://localhost:27017'
+    mongo.connect(url, (err, client) => {
+        if (err) {
+            console.error(err)
+            }
+        const db = client.db('figeur')
+        const collection = db.collection('memes')
+        collection.find().sort({created_on:-1}).limit(2).toArray((err, items) => {
+    res.send(JSON.stringify(items));
+  });
+});
+})
+
+
 /**
  * Primary app routes.
  */
-app.get('/', homeController.index);
+//app.get('/', homeController.index);
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);
@@ -263,3 +322,4 @@ app.listen(app.get('port'), () => {
 });
 
 module.exports = app;
+module.exports = router;
