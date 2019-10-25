@@ -34,7 +34,8 @@ const upload = multer({
 
 // Upload a file
 router.post('/upload', upload.array('files'/*maxnumberofuploads, 3*/), (req, res) => {
-  
+  //console.log(req.user);
+  //if (!req.user) res.status(400).json({ error: 'You arent even logged in!' });
   if (!req.files) res.status(400).json({ error: 'No files were uploaded.' })
   req.files.forEach(function(thiselement, index){
   const url = 'mongodb://localhost:27017'

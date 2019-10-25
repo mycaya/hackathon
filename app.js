@@ -148,6 +148,9 @@ app.use('/', s3);
 const seo = require('./pages/seo/seo');
 app.use('/', seo);
 
+const login = require('./pages/login/login');
+app.use('/', login);
+
 //APIs
 
 const fileupload = require('./apis/fileupload');
