@@ -293,6 +293,18 @@
     fixedContentPos: false
   });
 
+  $(window).load(function () {
+    $(".trigger_popup_fricc").click(function(){
+       $('.hover_bkgr_fricc').show();
+    });
+    $('.hover_bkgr_fricc').click(function(){
+        $('.hover_bkgr_fricc').hide();
+    });
+    $('.popupCloseButton').click(function(){
+        $('.hover_bkgr_fricc').hide();
+    });
+});
+
   function makeTimer() {
 
 		var endTime = new Date("21 December 2019 9:56:00 GMT+01:00");			
