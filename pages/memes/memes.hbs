@@ -26,6 +26,9 @@
 	<!-- ================Offcanvus Menu Area =================-->
 	<div class="side_menu">
 		<ul class="list menu_right">
+			{{#if user}}
+			<img src={{user.profile.picture}}>
+			{{/if}}
 			<li>
 				<a href="index.html">Home</a>
 			</li>
