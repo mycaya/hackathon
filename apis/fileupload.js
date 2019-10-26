@@ -47,7 +47,8 @@ router.post('/upload', upload.array('files'/*maxnumberofuploads, 3*/), (req, res
     const collection = db.collection('memes')
             let doc = {
                 link: "https://figeur.s3.us-east-2.amazonaws.com/"+thiselement.originalname,
-                'created_on' : new Date()
+                'created_on' : new Date(),
+                user: req.user
             };
             console.log(doc);
             collection.insert(doc, (err, doc) => {
