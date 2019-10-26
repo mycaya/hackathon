@@ -28,7 +28,15 @@
 		<ul class="list menu_right">
 			{{#if user}}
 			<img src={{user.profile.picture}}>
+			<li>
+				<a href="/logout">Logout</a>
+			</li>			
 			{{/if}}
+{{#unless user}}
+			<li>
+				<a href="/login">Login</a>
+			</li>
+{{/unless}}
 			<li>
 				<a href="index.html">Home</a>
 			</li>
@@ -61,17 +69,7 @@
 			<li>
 				<a href="service.html">Image</a>
 			</li>
-{{#unless user}}
-			<li>
-				<a href="/login">Login</a>
-			</li>
 
-{{/unless}}
-{{#if user}}
-			<li>
-				<a href="/logout">Logout</a>
-			</li>
-{{/if}}
 		</ul>
 	</div>
 
