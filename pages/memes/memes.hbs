@@ -92,6 +92,7 @@
 			</div>
 		</div>
 	</div>
+				{{#if user}}
 <div class="footer">
 		<div class="upload-btn-wrapper" title="Upload a Meme">
 			<form ref='uploadForm' 
@@ -104,6 +105,16 @@
 			</form>
 		</div>
 </div>
+			{{/if}}
+{{#unless user}}	
+<div class="footer">
+		<div class="upload-btn-wrapper" title="Upload a Meme">
+			<form action="/login">
+  			<button class="btn4" ><i class="flaticon-upload"></i></button>
+			</form>
+		</div>
+</div>
+{{/unless}}		
 	<!--================End Canvus Menu Area =================-->
 
 	<div class="hero-wrap js-fullheight" style="background-image: url('images/bg_1.jpg');">
