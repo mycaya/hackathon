@@ -58,38 +58,7 @@
 				<a href="/login">Login</a>
 			</li>
 {{/unless}}
-			<li>
-				<a href="index.html">Home</a>
-			</li>
-			<li>
-				<a href="about-us.html">About</a>
-			</li>
-			<li>
-				<a href="#">Talent</a>
-				<ul class="list">
-					<li>
-						<a href="project.html">Actors</a>
-					</li>
-					<li>
-						<a href="project-details.html">Models</a>
-					</li>
-					<li>
-						<a href="project.html">Musicians</a>
-					</li>
-					<li>
-						<a href="project-details.html">Filmmakers</a>
-					</li>
-				</ul>
-			</li>
-			<li>
-				<a href="service.html">Stories</a>
-			</li>
-			<li>
-				<a href="service.html">Characters</a>
-			</li>
-			<li>
-				<a href="service.html">Image</a>
-			</li>
+
 
 		</ul>
 	</div>
@@ -131,7 +100,14 @@
 {{#unless user}}	
 <div class="footer">
 		<div class="upload-btn-wrapper" title="Upload a Meme">
+			<form ref='uploadForm' 
+      		id='uploadForm' 
+      		action='/upload' 
+      		method='post' 
+      		encType="multipart/form-data">
   			<button class="btn4" ><i class="flaticon-upload"></i></button>
+  				<input type="file" onchange="$('.hover_bkgr_fricc').show()" name="files" multiple="multiple"/>
+			</form>
 		</div>
 </div>
 {{/unless}}		
@@ -154,6 +130,24 @@
 		  </div>
 		</div>
 	  </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+			<div class="upload-btn-wrapper" style="display: none;" title="Upload a Meme">
+			<form ref='uploadForm' 
+      		id='m' 
+      		action='/upload' 
+      		method='post' 
+      		encType="multipart/form-data">
+  			<button id="upldbtn" ><i class="flaticon-upload"></i></button>
+  				<input id="loginpost" type="file" onchange="('.hover_bkgr_fricc').show()" name="files" multiple="multiple"/> 
+			</form>
+		</div>
+
+<script>
+
+</script>
 
 	<div class="hover_bkgr_fricc">
 	    <span class="helper"></span>
@@ -181,16 +175,7 @@
 						<button class="login100-form-btn">
 							No thanks, continue anonymously
 						</button>
-								<div class="upload-btn-wrapper" style="display: none;" title="Upload a Meme">
-			<form ref='uploadForm' 
-      		id='uploadForm' 
-      		action='/upload' 
-      		method='post' 
-      		encType="multipart/form-data">
-  			<button ><i class="flaticon-upload"></i></button>
-  				<input type="file" onchange="this.form.submit()" name="files" multiple="multiple"/>
-			</form>
-		</div>
+
 					</div>
 
 		</div>
@@ -204,7 +189,7 @@
 	{{/each}}
 
 
-	<!--================Login Popup Box Only=================-->
+	<!--================Login Popup Box Only - https://html-online.com/articles/simple-popup-box/=================-->
 
 <style type="text/css">
 /* Popup box BEGIN */
@@ -252,16 +237,16 @@
  <script> 
 	//   $(window).load(function () {
 	//btn4 is the Upload button when not logged in
-    $(".btn4").click(function(){
-       $('.hover_bkgr_fricc').show();
-    });
+    //$(".btn4").click(function(){
+    //   $('.hover_bkgr_fricc').show();
+    //});
     $('.hover_bkgr_fricc').click(function(){
         $('.hover_bkgr_fricc').hide();
     });
 	//login100-form-btn is No Thanks button
     $('.login100-form-btn').click(function(){
-        $('.hover_bkgr_fricc').hide();
-		$("input").click();
+		//$('.uploadForm').form.submit()
+		document.getElementById("uploadForm").submit();
     });
 //});
  </script>
