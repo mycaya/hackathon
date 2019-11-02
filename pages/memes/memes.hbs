@@ -5,9 +5,9 @@
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="icon" href="img/favicon.png" type="image/png">
-	<title>Find the freshest memes. Theft them.</title>
-	<meta name="keywords" content="memes, dank, savage, memelord"/>
+	<link rel="icon" href="img/favicon.PNG" type="image/png">
+	<title>Figeur - Find the freshest memes. Theft them.</title>
+	<meta name="keywords" content="memes, dank, dankest memes, freshest memes, savage memes, obscure memes, savage, memelord"/>
 	<meta name="description" content="The easiest way to discover your style of meme."/>
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="css/bootstrap.css">
@@ -44,7 +44,8 @@
 
 <body style="background-color: #e0e0e0">
 
-	<!-- ================Offcanvus Menu Area =================-->
+
+	<!-- ================ Side Menu Area =================-->
 	<div class="side_menu">
 		<ul class="list menu_right">
 			{{#if user}}
@@ -55,19 +56,15 @@
 			{{/if}}
 {{#unless user}}
 			<li>
-				<a href="/login">Login</a>
+				<a id="reglogin" onclick="$('.hover_bkgr_fricc2').show()">Login</a>
 			</li>
 {{/unless}}
-
 
 		</ul>
 	</div>
 
 
-
-	<!--================End Offcanvus Menu Area =================-->
-
-	<!--================Canvus Menu Area =================-->
+	<!--================ Side Menu Icon =================-->
 	<div class="canvus_menu">
 		<div class="container">
 			<div class="float-right">
@@ -83,6 +80,8 @@
 		</div>
 	</div>
 
+
+	<!--================ Logged-in Upload Icon =================-->
 				{{#if user}}
 <div class="footer">
 		<div class="upload-btn-wrapper" title="Upload a Meme">
@@ -97,6 +96,9 @@
 		</div>
 </div>
 			{{/if}}
+
+
+	<!--================ Unauthenticated Upload Icon =================-->
 {{#unless user}}	
 <div class="footer">
 		<div class="upload-btn-wrapper" title="Upload a Meme">
@@ -111,13 +113,14 @@
 		</div>
 </div>
 {{/unless}}		
-	<!--================End Canvus Menu Area =================-->
+
+	<!--================ Page Top Area =================-->
 	<div class="hero-wrap js-fullheight" style="background-image: url('images/bg_1.jpg');">
 		<div class="overlay"></div>
 		<div class="container">
 		  <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
 			<div class="col-md-10 text-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
-				<h1 class="mb-0">Memes.</h1>
+				<h1 class="mb-0">Meme Foundry.</h1>
 				
 				<div class="s129">
 				</div>
@@ -131,24 +134,31 @@
 		</div>
 	  </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
+	<!--================ Regular Log-in =================-->
+	<div class="hover_bkgr_fricc2">
+	    <span class="helper"></span>
+	    <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
 
-			<div class="upload-btn-wrapper" style="display: none;" title="Upload a Meme">
-			<form ref='uploadForm' 
-      		id='m' 
-      		action='/upload' 
-      		method='post' 
-      		encType="multipart/form-data">
-  			<button id="upldbtn" ><i class="flaticon-upload"></i></button>
-  				<input id="loginpost" type="file" onchange="('.hover_bkgr_fricc').show()" name="files" multiple="multiple"/> 
-			</form>
+				<form class="login100-form validate-form flex-sb flex-w">
+					<span class="login100-form-title p-b-33">
+						Log in with
+					</span>			
+
+					<a href="/auth/facebook" class="btn-face m-b-20">
+						<img src="images/icons/icon-face.png">
+							Facebook
+					</a>
+
+					<a href="/auth/google" class="btn-google m-b-20">
+						<img src="images/icons/icon-google.png" alt="GOOGLE">
+						Google
+					</a>
+				</form>
 		</div>
+	</div>	  
 
-<script>
-
-</script>
-
+	<!--================ Upload Log-in =================-->
 	<div class="hover_bkgr_fricc">
 	    <span class="helper"></span>
 	    <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
@@ -158,8 +168,7 @@
 						Get credit for your posts
 						<br>
 						<p>Continue with</p>
-					</span>
-						
+					</span>			
 
 					<a href="/auth/facebook" class="btn-face m-b-20">
 						<img src="images/icons/icon-face.png">
@@ -175,11 +184,12 @@
 						<button class="login100-form-btn">
 							No thanks, continue anonymously
 						</button>
-
 					</div>
-
 		</div>
 	</div>
+
+
+
 	{{#each items}}
 	  	<div style="background-color: #e0e0e0" class="wrapper style2">
 			<article id="main" class="imgcontainer special">
@@ -229,6 +239,43 @@
   display: inline-block;
   font-weight: bold;
 }
+
+.hover_bkgr_fricc2{
+  background:rgba(0,0,0,.6);
+  cursor:pointer;
+  display:none;
+  height:100%;
+  position:fixed;
+  text-align:center;
+  top:0;
+  width:100%;
+  z-index:10000;
+}.hover_bkgr_fricc2 > .wrap-login100 {
+  background-color: #fff;
+  box-shadow: 10px 10px 60px #555;
+  display: inline-block;
+  height: auto;
+  max-width: 751px;
+  min-height: 100px;
+  vertical-align: middle;
+  width: 95%;
+  position: relative;
+  border-radius: 8px;
+  padding: 60px 5%;
+}
+.hover_bkgr_fricc2 .helper{
+  display:inline-block;
+  height:100%;
+  vertical-align:middle;
+}
+
+.trigger_popup_fricc {
+  cursor: pointer;
+  font-size: 20px;
+  margin: 20px;
+  display: inline-block;
+  font-weight: bold;
+}
 /* Popup box BEGIN */
 
 </style>
@@ -248,6 +295,10 @@
 		//$('.uploadForm').form.submit()
 		document.getElementById("uploadForm").submit();
     });
+
+	    $('.hover_bkgr_fricc2').click(function(){
+        $('.hover_bkgr_fricc2').hide();
+    });
 //});
  </script>
 
@@ -263,9 +314,9 @@
 	<script src="js/aos.js"></script>
 	<script src="js/main.js"></script>
 
-<!--================Login Popup Content=================-->
+		<!--================Login Popup Content=================-->
 
-		<script src="vendor/animsition/js/animsition.min.js"></script>
+	<script src="vendor/animsition/js/animsition.min.js"></script>
 	<script src="vendor/bootstrap/js/popper.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="vendor/select2/select2.min.js"></script>
