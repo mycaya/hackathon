@@ -191,13 +191,25 @@
 	<!--================ Content =================-->
 
 	{{#each items}}
-	  	<div style="background-color: #e0e0e0; margin-bottom: 2em;" class="wrapper style2">
+	  	<div style="background-color: #e0e0e0; " class="wrapper style2">
 			<article id="main" class="imgcontainer special">
-				<div class="img4" style="content:url({{this.user.profile.picture}});"></div>
+				<div class="img4" style="content:url(images/person.jpg);"></div>
 				<a href="#" class="image featured"><img src="{{this.link}}" alt="" /></a>
+
+
+				<form action="/moar" method="post" target="hiddenFrame">
+					<div>
+						<input name="_id" value={{{_id}}} style="display: none;"></input>						
+						<input type="submit" class="btn btn-success" style="position: relative; float: right" value="More like this">
+					</div>
+				</form>
+
 			</article>
 		</div>
 	{{/each}}
+
+		<iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
+
 
 <style type="text/css">
 .img4{
@@ -221,13 +233,21 @@ left: 50%; top: 30px; }
 @media (min-width: 992px) {
   .img4 {
     margin-top: -100px; } } 
+
   .wrapper.style2 {
     padding-top: 0;
-	margin: 0 30px;
+	margin: 0 30px 10em 30px;
   }
+.imgcontainer {
+  margin: 0 auto 0 auto;
+  max-width: 100%;
+  border-radius: 20px;
+  width: 900px;
+}
 		.image.featured {
       display: block;
 			width: 100%;
+			margin: 0
 		}
 </style>
 

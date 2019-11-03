@@ -162,6 +162,9 @@ app.use('/', fileupload);
 const memeshot = require('./apis/memeshot');
 app.use('/memeshot', memeshot);
 
+const moar = require('./apis/moar');
+app.use('/moar', moar);
+
 app.use(bodyParser.urlencoded())
 app.use(bodyParser.json())
 app.post('/catchr', function (req, res, next) {

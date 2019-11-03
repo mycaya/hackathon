@@ -502,7 +502,7 @@ left: 45%; top: 30px; }
     margin-top: -50px; } } 
 
 .imgcontainer {
-  margin: 0 auto;
+  margin: 0 auto 150px auto;
   max-width: 100%;
   border-radius: 20px;
   width: 900px;
@@ -552,7 +552,7 @@ left: 45%; top: 30px; }
 		display: inline-block;
     border: 0;        
     border-radius: 0.25rem;
-		outline: 0;
+    outline: 0;
 	}
 
 		.image img {
@@ -568,7 +568,6 @@ left: 45%; top: 30px; }
 		.image.featured {
       display: block;
 			width: 100%;
-			margin: 0 1em 30px 30px;
 		}
 
 		.image.left {
