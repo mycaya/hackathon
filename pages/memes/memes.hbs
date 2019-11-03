@@ -195,18 +195,31 @@
 			<article id="main" class="imgcontainer special">
 				<div class="img4" style="content:url({{this.user.profile.picture}});"></div>
 				<a href="#" class="image featured"><img src="{{this.link}}" alt="" /></a>
-
-
+				
 				<form action="/moar" method="post" target="hiddenFrame">
-					<div>
-						<input name="_id" value={{{_id}}} style="display: none;"></input>						
-						<input type="submit" class="btn btn-success" style="position: relative; float: right" value="More like this">
-					</div>
+    				
+					<button name="id" value="{{this._id}}" style="position: relative; float: right" class="btn btn-success">More like this in my feed</button>
 				</form>
 
 			</article>
 		</div>
 	{{/each}}
+
+	<script>
+
+		$('#moar').click(function() {
+    $.ajax({
+        url: '/moar',
+        type: 'POST',
+        data: {
+_id: _id
+        },
+        success: function(msg) {
+            alert('More Sent');
+        }               
+    });
+});
+	</script>
 
 		<iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
 

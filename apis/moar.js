@@ -2,6 +2,7 @@ var express = require('express')
  , async = require('async')
  , http = require('http');
 const router = express.Router()
+var mongo = require('mongodb').MongoClient;
 var app = express();
 
 var bodyParser = require('body-parser');
@@ -10,11 +11,12 @@ app.use(bodyParser.json())
 
 
 //var router = require('express').Router();
-app.get('/moar', function (req, res, next) {
-      console.log('memeshot: '+(req.body));
+router.post('/moar', function (req, res, next) {
+      console.log('moar: '+(JSON.stringify(req.body)));
      //res.send('Hit catchr: '+(JSON.stringify(req.body)));
 
-     const url = 'mongodb://localhost:27017'
+     const url = 'mongodb://localhost:27017';
+     const id = (JSON.stringify(req.body));
      mongo.connect(url, (err, client) => {
        if (err) {
            console.error(err)
@@ -22,7 +24,7 @@ app.get('/moar', function (req, res, next) {
        const db = client.db('figeur')
        const collection = db.collection('likes')
                let doc = {
-                _id: _id
+                id: id
                };
                console.log(doc);
                collection.insert(doc, (err, doc) => {
