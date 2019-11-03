@@ -13,18 +13,24 @@ app.use(bodyParser.json())
 app.get('/moar', function (req, res, next) {
       console.log('memeshot: '+(req.body));
      //res.send('Hit catchr: '+(JSON.stringify(req.body)));
-      const url = 'mongodb://localhost:27017'
-      mongo.connect(url, (err, client) => {
-          if (err) {
-              console.error(err)
-              }
-          const db = client.db('figeur')
-          const collection = db.collection('likes')
-          collection.insert({_id: _id}, (err, doc) => {
-            res.json('okmoar');
-            });
+
+     const url = 'mongodb://localhost:27017'
+     mongo.connect(url, (err, client) => {
+       if (err) {
+           console.error(err)
+           }
+       const db = client.db('figeur')
+       const collection = db.collection('likes')
+               let doc = {
+                _id: _id
+               };
+               console.log(doc);
+               collection.insert(doc, (err, doc) => {
+               //res.json(doc);
+               });
+   });
 });
-  })
+
 
   module.exports = router
 
