@@ -30,6 +30,14 @@ router.post('/moar', function (req, res, next) {
                collection.insert(doc, (err, doc) => {
                //res.json(doc);
                });
+               db.collection('likes').update(
+                { _id: id },
+                { $inc: { likes: 1 } }
+             )
+               db.collection('memes').update(
+                { _id: id },
+                { $inc: { likes: 1 } }
+             )
    });
 });
 
