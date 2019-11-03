@@ -48,6 +48,8 @@ router.post('/upload', upload.array('files'/*maxnumberofuploads, 3*/), (req, res
             let doc = {
                 link: "https://figeur.s3.us-east-2.amazonaws.com/"+thiselement.originalname,
                 'created_on' : new Date(),
+                randy: 95,
+                tags: ['memesofmayhem', 'randy'],
                 user: req.user
             };
             console.log(doc);
