@@ -193,7 +193,7 @@
 	{{#each items}}
 	  	<div style="background-color: #e0e0e0; margin-bottom: 2em;" class="wrapper style2">
 			<article id="main" class="imgcontainer special">
-				<div class="img4" style="content:url({{this.user.profile.picture}});"></div>
+				<div class="img4" style="content:url(images/person.jpg);"></div>
 				<a href="#" class="image featured"><img src="{{this.link}}" alt="" /></a>
 			</article>
 		</div>
@@ -208,7 +208,7 @@
   margin-bottom: 5px;
 position: relative;
 z-index: 99999;
-left: 45%; top: 30px; }
+left: 50%; top: 30px; }
 
 @media (min-width: 2px) {
   .img4 {
@@ -221,6 +221,14 @@ left: 45%; top: 30px; }
 @media (min-width: 992px) {
   .img4 {
     margin-top: -100px; } } 
+  .wrapper.style2 {
+    padding-top: 0;
+	margin: 0 30px;
+  }
+		.image.featured {
+      display: block;
+			width: 100%;
+		}
 </style>
 
 	<!--================Login Popup Box Only - https://html-online.com/articles/simple-popup-box/=================-->
