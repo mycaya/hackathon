@@ -3,6 +3,7 @@ var express = require('express')
  , http = require('http');
 const router = express.Router()
 var mongo = require('mongodb').MongoClient;
+var ObjectID = require('mongodb').ObjectID;
 var app = express();
 
 var bodyParser = require('body-parser');
@@ -12,29 +13,34 @@ app.use(bodyParser.json())
 
 //var router = require('express').Router();
 router.post('/moar', function (req, res, next) {
-      console.log('moar: '+(JSON.stringify(req.body)));
-     //res.send('Hit catchr: '+(JSON.stringify(req.body)));
-
      const url = 'mongodb://localhost:27017';
-     const id = (JSON.stringify(req.body));
-     console.log('id: '+id);
+     const id = req.body.id;
+     var o_id = new ObjectID(id);
      mongo.connect(url, (err, client) => {
        if (err) {
            console.error(err)
            }
        const db = client.db('figeur')
-       const collection = db.collection('likes')
-       collection.findOne({ id: (id) }, (err, match) => {
+       const likes = db.collection('likes')
+       const memes = db.collection('memes')
+       likes.findOne({ id: (id) }, (err, match) => {
         if(match){
-             collection.updateOne(
+            likes.updateOne(
                 { id: (id) },
                 { $inc:{ likes: 1 }}
              )  
             }else{
-                collection.insertOne(
+                likes.insertOne(
                     { id: (id), likes: 1}
                  )  
                 }});
+        
+memes.updateOne(
+                            { '_id': o_id },
+                            { $inc:{ likes: 1 }}
+                         )  
+
+
    });
 });
 

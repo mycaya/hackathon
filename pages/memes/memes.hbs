@@ -205,22 +205,6 @@
 		</div>
 	{{/each}}
 
-	<script>
-
-		$('#moar').click(function() {
-    $.ajax({
-        url: '/moar',
-        type: 'POST',
-        data: {
-_id: _id
-        },
-        success: function(msg) {
-            alert('More Sent');
-        }               
-    });
-});
-	</script>
-
 		<iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
 
 
