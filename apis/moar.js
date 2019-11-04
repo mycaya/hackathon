@@ -17,27 +17,24 @@ router.post('/moar', function (req, res, next) {
 
      const url = 'mongodb://localhost:27017';
      const id = (JSON.stringify(req.body));
+     console.log('id: '+id);
      mongo.connect(url, (err, client) => {
        if (err) {
            console.error(err)
            }
        const db = client.db('figeur')
        const collection = db.collection('likes')
-               let doc = {
-                id: id
-               };
-               console.log(doc);
-               collection.insert(doc, (err, doc) => {
-               //res.json(doc);
-               });
-               db.collection('likes').update(
-                { _id: id },
-                { $inc: { likes: 1 } }
-             )
-               db.collection('memes').update(
-                { _id: id },
-                { $inc: { likes: 1 } }
-             )
+       collection.findOne({ id: (id) }, (err, match) => {
+        if(match){
+             collection.updateOne(
+                { id: (id) },
+                { $inc:{ likes: 1 }}
+             )  
+            }else{
+                collection.insertOne(
+                    { id: (id), likes: 1}
+                 )  
+                }});
    });
 });
 
