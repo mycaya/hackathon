@@ -135,6 +135,8 @@ app.get('/', (req, res) => {
 app.use(express.static('public'));
 
 //Pages
+const home = require('./pages/home/home');
+app.use('/', home);
 
 const memes = require('./pages/memes/memes');
 app.use('/', memes);
