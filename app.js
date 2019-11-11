@@ -153,6 +153,9 @@ app.use('/', seo);
 const login = require('./pages/login/login');
 app.use('/', login);
 
+const infinite = require('./pages/infinite/infinite');
+app.use('/', infinite);
+
 //APIs
 
 const fileupload = require('./apis/fileupload');
@@ -167,6 +170,9 @@ app.use('/memeshot', memeshot);
 const moar = require('./apis/moar');
 app.use('/', moar);
 
+const nsfw = require('./apis/nsfw');
+app.use('/', nsfw);
+
 app.use(bodyParser.urlencoded())
 app.use(bodyParser.json())
 app.post('/catchr', function (req, res, next) {
@@ -178,6 +184,8 @@ app.post('/catchr', function (req, res, next) {
 //var router = require('express').Router();
 app.get('/memeshot', function (req, res, next) {
     console.log('memeshot: '+(req.body));
+    const limit = req.body.limit || 4;
+    const skip = req.body.skip || 0;
     //res.send('Hit memeshot: '+ req.body);
    //res.send('Hit catchr: '+(JSON.stringify(req.body)));
     const url = 'mongodb://localhost:27017'
@@ -187,7 +195,7 @@ app.get('/memeshot', function (req, res, next) {
             }
         const db = client.db('figeur')
         const collection = db.collection('memes')
-        collection.find().sort({created_on:-1}).limit(2).toArray((err, items) => {
+        collection.find().sort({created_on:-1}).skip(skip).limit(limit).toArray((err, items) => {
     res.send(JSON.stringify(items));
   });
 });

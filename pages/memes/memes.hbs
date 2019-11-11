@@ -195,9 +195,10 @@
 			<article id="main" class="imgcontainer special">
 				<div class="img4" style="content:url({{this.user.profile.picture}});"></div>
 				<a href="#" class="image featured"><img src="{{this.link}}" alt="" /></a>
-				
+				<form action="/nsfw" method="post" target="hiddenFrame">
+    				<button name="id" value="{{_id}}" style="position: relative; float: left" class="btn btn-success">This is so offensive!</button>
+				</form>				
 				<form action="/moar" method="post" target="hiddenFrame">
-    				
 					<button name="id" value="{{_id}}" style="position: relative; float: right" class="btn btn-success">More like this in my feed</button>
 				</form>
 

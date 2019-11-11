@@ -21,7 +21,7 @@ app.get('/memeshot', function (req, res, next) {
               }
           const db = client.db('figeur')
           const collection = db.collection('memes')
-          collection.find().sort({created_on:-1}).limit(2).toArray((err, items) => {
+          collection.find().toArray((err, items) => {
       res.send(items);
     });
 });
