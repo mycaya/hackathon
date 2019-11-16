@@ -189,7 +189,7 @@
 	</div>
 
 	<!--================ Content =================-->
-<div id="wholepagecontent">
+<div id="content">
 	{{#each items}}
 	  	<div style="background-color: #e0e0e0; " class="wrapper style2">
 			<article id="main" class="imgcontainer special">
@@ -221,7 +221,6 @@ $(window).scroll(function() {
    }
 });
 
-
 function addBoxes (amount) {
 jQuery.ajax({
     type: 'GET',
@@ -229,7 +228,7 @@ jQuery.ajax({
     dataType: 'json', // ** ensure you add this line **
     success: function(data) {
 		$.each(data,function ( i, item ) {
-    $('#wholepagecontent').append("<div></div><img src=" + data[i].link + ">");
+    $('#content').append("<div></div><img src=" + data[i].link + ">");
  });
     }
 });

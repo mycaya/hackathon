@@ -8,16 +8,8 @@ router.get('/', (req, res) => {
         if (err) {
             console.error(err)
             }
-        const db = client.db('figeur')
-        const collection = db.collection('memes')
-        collection.find().sort({created_on:-1, likes:-1,}).limit(150).toArray((err, items) => {
         res.render(__dirname+'/memes.hbs', {
-            items: items,
             user: req.user
-        });
-        //res.sendFile(__dirname+'/memes.html', {
-            //environments: environments
-        //});
         });
         });
     });

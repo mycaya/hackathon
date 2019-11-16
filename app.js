@@ -156,6 +156,9 @@ app.use('/', login);
 const infinite = require('./pages/infinite/infinite');
 app.use('/', infinite);
 
+const scroll = require('./pages/scroll/scroll');
+app.use('/', scroll);
+
 //APIs
 
 const fileupload = require('./apis/fileupload');
