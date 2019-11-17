@@ -185,10 +185,10 @@ app.post('/catchr', function (req, res, next) {
 })
 
 //var router = require('express').Router();
-app.get('/memeshot', function (req, res, next) {
-    console.log('memeshot: '+(req.body));
-    const limit = req.body.limit || 4;
-    const skip = req.body.skip || 0;
+app.post('/memeshot', function (req, res, next) {
+    console.log('memeshot: '+(JSON.stringify(req.body)));
+    const limit = parseInt(req.body.limit) || 4;
+    const skip = parseInt(req.body.skip) || 0;
     //res.send('Hit memeshot: '+ req.body);
    //res.send('Hit catchr: '+(JSON.stringify(req.body)));
     const url = 'mongodb://localhost:27017'

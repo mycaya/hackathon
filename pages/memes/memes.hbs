@@ -40,6 +40,10 @@
 		<link rel="stylesheet" type="text/css" href="css/main.css">
 
 	</style>
+	<script type="text/javascript" src="js/lib/jquery.min.js"></script>
+	<script type="text/javascript" src="js/examples.js"></script>
+	
+	<script type="text/javascript" src="scrollmagic/uncompressed/ScrollMagic.js"></script>
 </head>
 
 <body style="background-color: #e0e0e0">
@@ -207,54 +211,39 @@
 	{{/each}}
 </div>
 <script>
-/*function readyFn( jQuery ) {
-    $('#wholepagecontent').append("<div id='loadmore'><button style='position: relative; float: center' class='btn btn-success'>More like this in my feed</button>></div>");
-	alert("loadmore func fired")
-}
- 
-$( document ).ready( readyFn );*/
+
 
 $(window).scroll(function() {
    if($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
 	   alert("near bottom!");
-       addBoxes(1);
+inc();
+        //addBoxes(1);
    }
 });
 
+	var n = 0;
+
+function inc() {
+     n++;
+	 addBoxes(1);
+ }
+
 function addBoxes (amount) {
+var skipspot = n * 10;
+var data = {"limit": 10, "skip": skipspot};	
 jQuery.ajax({
-    type: 'GET',
+    type: 'POST',
 	url: '/memeshot',
     dataType: 'json', // ** ensure you add this line **
+  data: data,
     success: function(data) {
 		$.each(data,function ( i, item ) {
-    $('#content').append("<div></div><img src=" + data[i].link + ">");
+    $('#content').append("<div style='background-color: #e0e0e0;' class='wrapper style2'><article class='imgcontainer special'><a href='#' class='image featured'><img src=" + data[i].link + " /></a><form action='/nsfw' method='post' target='hiddenFrame'><button name='id' value=" + data[i]._id + " style='position: relative; float: left' class='btn btn-success'>This is so offensive!</button></form><form action='/moar' method='post' target='hiddenFrame'><button name='id' value=" + data[i]._id + " style='position: relative; float: right' class='btn btn-success'>More like this in my feed</button></form></article></div>");
  });
     }
 });
 }
 
-/*
-	function addBoxes () {
-jQuery.ajax({
-    type: 'GET',
-	url: '/memeshot',
-    dataType: 'json', // ** ensure you add this line **
-    success: function(data) {
-		$.each(data,function ( i, item ) {
-    $('#wholepagecontent').append("<div style='background-color: #e0e0e0; class='wrapper style2'><article id='main' class='imgcontainer special'><div class='img4' style='content:url(" + data[i].user.profile.picture + ");'></div><a href='#' class='image featured'><img src=" + data[i].link + " alt="" /></a><form action='/nsfw' method='post' target='hiddenFrame'><button name='id' value=" + data[i]._id + " style='position: relative; float: left' class='btn btn-success'>This is so offensive!</button></form><form action='/moar' method='post' target='hiddenFrame'><button name='id' value=" + data[i]._id + " style='position: relative; float: right' class='btn btn-success'>More like this in my feed</button></form></article></div>")
-					.addClass("box1")
-					.appendTo(".dynamicContent #content");
-
-	$('#wholepagecontent').append("<div><button style='position: relative; float: center' class='btn btn-success'>More like this in my feed</button>></div>")
- });
-    }
-});
-	}
-*/
-
-
-	//$('#loadmore').click(addBoxes)
 </script>
 
 
