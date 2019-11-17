@@ -197,11 +197,20 @@ app.post('/memeshot', function (req, res, next) {
             console.error(err)
             }
         const db = client.db('figeur')
-        const collection = db.collection('memes')
-        collection.find().sort({created_on:-1}).skip(skip).limit(limit).toArray((err, items) => {
+        const memes = db.collection('memes')
+        const memeshot = db.collection('memeshot')
+        memes.find().sort({created_on:-1}).skip(skip).limit(limit).toArray((err, items) => {
     res.send(JSON.stringify(items));
   });
+
+  memeshot.updateOne(
+                { loads: 'loads' },
+                { $inc:{ memeshot: 1 }}
+             )  
+
 });
+
+
 })
 
 
