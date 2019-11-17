@@ -13,8 +13,10 @@ router.get('/memes', (req, res) => {
         collection.find().sort({created_on:-1, likes:-1,}).limit(10).toArray((err, items) => {
         res.render(__dirname+'/memes.hbs', {
             items: items,
-            user: req.user
+            user: req.user,
+            session: req.sessionID
         });
+        console.log(req.sessionID)
         //res.sendFile(__dirname+'/memes.html', {
             //environments: environments
         //});

@@ -83,6 +83,7 @@ app.use(session({
   saveUninitialized: true,
   secret: process.env.SESSION_SECRET,
   cookie: { maxAge: 1209600000 }, // two weeks in milliseconds
+  sessionid: Math.random(),
   store: new MongoStore({
     url: process.env.MONGODB_URI,
     autoReconnect: true,
@@ -206,11 +207,22 @@ app.post('/memeshot', function (req, res, next) {
   memeshot.updateOne(
                 { loads: 'loads' },
                 { $inc:{ memeshot: 1 }}
-             )  
-
+             );
+  memeshot.findOne({sessionid: (req.body.sessionid)}, (err, match) => {
+    if(match){
+             memeshot.updateOne(
+                { sessionid: req.body.sessionid },
+                { $inc:{ memeshot: 1 }}
+             )
+            }else{
+             memeshot.insertOne(
+                { sessionid: req.body.sessionid },
+                { $inc:{ memeshot: 1 }}
+             )
+            };
 });
 
-
+});
 })
 
 

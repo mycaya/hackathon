@@ -220,16 +220,19 @@ $(window).scroll(function() {
    }
 });
 
+
 var n = 0;
 
 function inc() {
      n++;
 	 addBoxes(1);
- }
+ };
+
+var sessionnum = "{{session}}";
 
 function addBoxes (amount) {
 var skipspot = n * 10;
-var data = {"limit": 10, "skip": skipspot};	
+var data = {"limit": 10, "skip": skipspot, "sessionid": sessionnum};	
 jQuery.ajax({
     type: 'POST',
 	url: '/memeshot',
@@ -241,7 +244,8 @@ jQuery.ajax({
  });
     }
 });
-}
+};
+
 
 </script>
 

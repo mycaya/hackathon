@@ -73,14 +73,16 @@ $(window).on("scroll", function() {
 		addBoxes(1);	
 	}
 });*/
-
+$(document).ready(function(){
 $(window).scroll(function() {
    if($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
 	   alert("near bottom!");
        addBoxes(1);
    }
 });
+});
 
+$(document).ready(function(){
 function addBoxes (amount) {
 jQuery.ajax({
     type: 'GET',
@@ -92,12 +94,8 @@ jQuery.ajax({
  });
     }
 });
-
-	// "loading" done -> revert to normal state
-	//scene.update(); // make sure the scene gets the new start position
-	//$("#loader").removeClass("active");
 	}
-
+});
 						// add some boxes to start with.
 						addBoxes(1);
 					</script>
