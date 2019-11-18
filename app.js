@@ -190,39 +190,90 @@ app.post('/memeshot', function (req, res, next) {
     console.log('memeshot: '+(JSON.stringify(req.body)));
     const limit = parseInt(req.body.limit) || 4;
     const skip = parseInt(req.body.skip) || 0;
-    //res.send('Hit memeshot: '+ req.body);
-   //res.send('Hit catchr: '+(JSON.stringify(req.body)));
+    const nodup = 1;
+    //var exclude = '';
+
     const url = 'mongodb://localhost:27017'
     mongo.connect(url, (err, client) => {
         if (err) {
             console.error(err)
             }
-        const db = client.db('figeur')
-        const memes = db.collection('memes')
-        const memeshot = db.collection('memeshot')
-        memes.find().sort({created_on:-1}).skip(skip).limit(limit).toArray((err, items) => {
-    res.send(JSON.stringify(items));
-  });
+            const db = client.db('figeur')
+            const memes = db.collection('memes')
+            const memeshot = db.collection('memeshot')
+            const sessions = db.collection('session')
+            //If we're using No Duplicates..
+            if (nodup==1){
+              //Find the user's session
+              sessions.updateOne(
+                {sessionid: (req.body.sessionid)},
+                { $inc:{ memeshot: 1 }},
+                {upsert: true}
+                );
+              //Grab their Duplicates
+              sessions.findOne({sessionid: (req.body.sessionid)}, function (err, result){
+                if (result) {
+                }
+                exclude = result.seen;
+                //console.log('Result: '+ JSON.stringify(result.seen));
+                console.log('exlcu11: '+exclude);
+                //Exclude seen
+                memes.find({ "_id": {"$nin": exclude}}).sort({created_on:-1}).skip(skip).limit(limit).toArray((err, items) => {
+                res.send(JSON.stringify(items));
+                });
 
-  memeshot.updateOne(
-                { loads: 'loads' },
-                { $inc:{ memeshot: 1 }}
-             );
-  memeshot.findOne({sessionid: (req.body.sessionid)}, (err, match) => {
-    if(match){
-             memeshot.updateOne(
-                { sessionid: req.body.sessionid },
-                { $inc:{ memeshot: 1 }}
-             )
+              });
+              
+
+
+memeshot.updateOne(
+      { loads: 'loads' },
+      { $inc:{ memeshot: 1 }}
+   );
+memeshot.findOne({sessionid: (req.body.sessionid)}, (err, match) => {
+if(match){
+   memeshot.updateOne(
+      { sessionid: req.body.sessionid },
+      { $inc:{ memeshot: 1 }}
+   )
+  }else{
+   memeshot.insertOne(
+      { sessionid: req.body.sessionid },
+      { $inc:{ memeshot: 1 }}
+   )
+  };
+});
+
+            //If including Duplicates
             }else{
-             memeshot.insertOne(
-                { sessionid: req.body.sessionid },
-                { $inc:{ memeshot: 1 }}
-             )
-            };
+
+memes.find().sort({created_on:-1}).skip(skip).limit(limit).toArray((err, items) => {
+res.send(JSON.stringify(items));
 });
 
+memeshot.updateOne(
+      { loads: 'loads' },
+      { $inc:{ memeshot: 1 }}
+   );
+memeshot.findOne({sessionid: (req.body.sessionid)}, (err, match) => {
+if(match){
+   memeshot.updateOne(
+      { sessionid: req.body.sessionid },
+      { $inc:{ memeshot: 1 }}
+   )
+  }else{
+   memeshot.insertOne(
+      { sessionid: req.body.sessionid },
+      { $inc:{ memeshot: 1 }}
+   )
+  };
 });
+  
+            }
+
+//Close Mongo Connect
+});
+//Close POST call
 })
 
 
