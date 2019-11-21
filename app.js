@@ -218,8 +218,18 @@ app.post('/memeshot', function (req, res, next) {
                 //console.log('Result: '+ JSON.stringify(result.seen));
                 console.log('exlcu11: '+exclude);
                 //Exclude seen
-                memes.find({ "_id": {"$nin": exclude}}).sort({created_on:-1}).skip(skip).limit(limit).toArray((err, items) => {
-                res.send(JSON.stringify(items));
+                memes.find({ "_id": {"$nin": exclude}}).sort({created_on:-1}).skip(skip).limit(limit).project( {_id: 1} ).map(x => x._id).toArray((err, items) => {
+                  console.log('items!: '+JSON.stringify(items));
+                  sessions.updateOne(
+                    {sessionid: (req.body.sessionid)},
+                    { $push:{ seen: { $each: items } }}
+                    );
+                    
+                    memes.find({ "_id": {"$in": items}}).sort({created_on:-1}).toArray((err, items) => {
+                      //console.log('items!: '+JSON.stringify(items));
+                    res.send(JSON.stringify(items));
+                    });
+
                 });
 
               });
