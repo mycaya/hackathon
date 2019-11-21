@@ -192,7 +192,7 @@
 		</div>
 	</div>
 
-	<!--================ Content =================-->
+	<!--================ Content ===============
 <div id="content">
 	{{#each items}}
 	  	<div style="background-color: #e0e0e0; " class="wrapper style2">
@@ -209,7 +209,8 @@
 			</article>
 		</div>
 	{{/each}}
-</div>
+</div>==-->
+<div id="content"></div>
 <script>
 
 
@@ -222,6 +223,8 @@ $(window).scroll(function() {
 
 
 var n = 0;
+
+$( document ).ready( inc );
 
 function inc() {
      n++;
@@ -240,12 +243,11 @@ jQuery.ajax({
   data: data,
     success: function(data) {
 		$.each(data,function ( i, item ) {
-    $('#content').append("<div style='background-color: #e0e0e0;' class='wrapper style2'><article class='imgcontainer special'><a href='#' class='image featured'><img src=" + data[i].link + " /></a><form action='/nsfw' method='post' target='hiddenFrame'><button name='id' value=" + data[i]._id + " style='position: relative; float: left' class='btn btn-success'>This is so offensive!</button></form><form action='/moar' method='post' target='hiddenFrame'><button name='id' value=" + data[i]._id + " style='position: relative; float: right' class='btn btn-success'>More like this in my feed</button></form></article></div>");
+    $('#content').append("<div style='background-color: #e0e0e0;' class='wrapper style2'><article class='imgcontainer special'><div class=img4'></div><a href='#' class='image featured'><img src=" + data[i].link + " /></a><form action='/nsfw' method='post' target='hiddenFrame'><button name='id' value=" + data[i]._id + " style='position: relative; float: left' class='btn btn-success'>This is so offensive!</button></form><form action='/moar' method='post' target='hiddenFrame'><button name='id' value=" + data[i]._id + " style='position: relative; float: right' class='btn btn-success'>More like this in my feed</button></form></article></div>");
  });
     }
 });
 };
-
 
 </script>
 
