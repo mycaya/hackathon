@@ -205,16 +205,18 @@ app.post('/memeshot', function (req, res, next) {
           //If we're using No Duplicates..
           if (nodup==1){
             //Find the user's session
-              sessions.updateOne(
-                {sessionid: (req.body.sessionid)},
-                { $set:{ seen: ["init1", "init2"] }}
-                , upsert=true
-            )
+              sessions.update(
+                        {sessionid: (req.body.sessionid)},
+                        {
+                           $setOnInsert: { "seen": ["initial"] }
+                        },
+                        { upsert: true }
+                      )
             //Grab their Duplicates
             sessions.findOne({sessionid: (req.body.sessionid)}, function (err, result){
               exclude = result.seen;
               
-              //console.log('Result: '+ JSON.stringify(result.seen));
+              console.log('Result: '+ JSON.stringify(result.seen));
               console.log('exlcu11: '+exclude);
               //Exclude seen
               memes.find({ "_id": {"$nin": exclude}}).sort({created_on:-1}).skip(skip).limit(limit).project( {_id: 1} ).map(x => x._id).toArray((err, items) => {
@@ -251,8 +253,8 @@ if(match){
     { $inc:{ memeshot: 1 }}
  )
 };
-});
 
+});
           //If including Duplicates
           }else{
 
