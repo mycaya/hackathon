@@ -190,8 +190,9 @@ app.post('/memeshot', function (req, res, next) {
     console.log('memeshot: '+(JSON.stringify(req.body)));
     const limit = parseInt(req.body.limit) || 4;
     const skip = parseInt(req.body.skip) || 0;
+
+    // Switch - 1 equals No Dupe is On
     const nodup = 1;
-    //var exclude = '';
 
     const url = 'mongodb://localhost:27017'
     mongo.connect(url, (err, client) => {
@@ -202,9 +203,10 @@ app.post('/memeshot', function (req, res, next) {
             const memes = db.collection('memes')
             const memeshot = db.collection('memeshot')
             const sessions = db.collection('session')
+
             //If we're using No Duplicates..
             if (nodup==1){
-              //Find the user's session
+              //Ensure User has a 'seen' array
                 sessions.updateOne(
                   { sessionid: (req.body.sessionid), "seen.0": { "$exists": false } },
                   { "$set": { "seen": [] } }
@@ -214,31 +216,29 @@ app.post('/memeshot', function (req, res, next) {
                 if (result) {
                 }
                 exclude = result.seen;
-                //console.log('Result: '+ JSON.stringify(result.seen));
-                console.log('exlcu11: '+exclude);
-                //Exclude seen
+
+                //Exclude seen and fetch next set of _ids
                 memes.find({ "_id": {"$nin": exclude}}).sort({created_on:-1}).skip(skip).limit(limit).project( {_id: 1} ).map(x => x._id).toArray((err, items) => {
-                  console.log('items!: '+JSON.stringify(items));
+
+                  //Push next set of _ids to 'seen' array
                   sessions.updateOne(
                     {sessionid: (req.body.sessionid)},
                     { $push:{ seen: { $each: items } }}
                     );
                     
+                    //Fetch the images in that set of _ids and send to browser
                     memes.find({ "_id": {"$in": items}}).sort({created_on:-1}).toArray((err, items) => {
-                      //console.log('items!: '+JSON.stringify(items));
                     res.send(JSON.stringify(items));
                     });
-
                 });
-
               });
               
-
-
+//Increment master counter
 memeshot.updateOne(
       { loads: 'loads' },
       { $inc:{ memeshot: 1 }}
    );
+//Increment user-specific counter   
 memeshot.findOne({sessionid: (req.body.sessionid)}, (err, match) => {
 if(match){
    memeshot.updateOne(
@@ -253,8 +253,8 @@ if(match){
   };
 });
 
-            //If including Duplicates
-            }else{
+//If including Duplicates
+}else{
 
 memes.find().sort({created_on:-1}).skip(skip).limit(limit).toArray((err, items) => {
 res.send(JSON.stringify(items));
@@ -277,9 +277,9 @@ if(match){
    )
   };
 });
-  
-            }
 
+//Close Else/Dupe  
+}
 //Close Mongo Connect
 });
 //Close POST call

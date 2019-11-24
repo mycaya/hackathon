@@ -210,9 +210,12 @@
 		</div>
 	{{/each}}
 </div>==-->
-<div id="content"></div>
-<script>
 
+<!--================ Feed =================-->
+<div id="content"></div>
+
+
+<script>
 
 $(window).scroll(function() {
    if($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
@@ -226,6 +229,7 @@ var n = 0;
 
 $( document ).ready( inc );
 
+//increments meme page
 function inc() {
      n++;
 	 addBoxes(1);
@@ -253,7 +257,7 @@ jQuery.ajax({
 
 
 
-		<iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
+<iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
 
 
 <style type="text/css">
