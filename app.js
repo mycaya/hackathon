@@ -213,8 +213,9 @@ app.post('/memeshot', function (req, res, next) {
             //Grab their Duplicates
             sessions.findOne({sessionid: (req.body.sessionid)}, function (err, result){
               if (result) {
+                exclude = result.seen;
               }
-              exclude = result.seen;
+              
               //console.log('Result: '+ JSON.stringify(result.seen));
               console.log('exlcu11: '+exclude);
               //Exclude seen
