@@ -218,7 +218,7 @@ app.post('/memeshot', function (req, res, next) {
                 }
                 if (result) {
                   
-                exclude = result.seen;
+                var exclude = result.seen;
                 }
 
                 //Exclude seen and fetch next set of _ids
