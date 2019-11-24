@@ -217,8 +217,9 @@ app.post('/memeshot', function (req, res, next) {
                 sessions.insertOne({sessionid: (req.body.sessionid)}, { "$set": { "seen": ["initial"] } })
                 }
                 if (result) {
-                }
+                  
                 exclude = result.seen;
+                }
 
                 //Exclude seen and fetch next set of _ids
                 memes.find({ "_id": {"$nin": exclude}}).sort({created_on:-1}).skip(skip).limit(limit).project( {_id: 1} ).map(x => x._id).toArray((err, items) => {
