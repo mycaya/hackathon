@@ -187,103 +187,99 @@ app.post('/catchr', function (req, res, next) {
 
 //var router = require('express').Router();
 app.post('/memeshot', function (req, res, next) {
-    console.log('memeshot: '+(JSON.stringify(req.body)));
-    const limit = parseInt(req.body.limit) || 4;
-    const skip = parseInt(req.body.skip) || 0;
+  console.log('memeshot: '+(JSON.stringify(req.body)));
+  const limit = parseInt(req.body.limit) || 4;
+  const skip = parseInt(req.body.skip) || 0;
+  const nodup = 1;
+  //var exclude = '';
 
-    // Switch - 1 equals No Dupe is On
-    const nodup = 1;
-
-    const url = 'mongodb://localhost:27017'
-    mongo.connect(url, (err, client) => {
-        if (err) {
-            console.error(err)
-            }
-            const db = client.db('figeur')
-            const memes = db.collection('memes')
-            const memeshot = db.collection('memeshot')
-            const sessions = db.collection('session')
-
-            //If we're using No Duplicates..
-            if (nodup==1){
-              //Ensure User has a 'seen' array
+  const url = 'mongodb://localhost:27017'
+  mongo.connect(url, (err, client) => {
+      if (err) {
+          console.error(err)
+          }
+          const db = client.db('figeur')
+          const memes = db.collection('memes')
+          const memeshot = db.collection('memeshot')
+          const sessions = db.collection('session')
+          //If we're using No Duplicates..
+          if (nodup==1){
+            //Find the user's session
+              sessions.updateOne(
+                { sessionid: (req.body.sessionid), "seen.0": { "$exists": false } },
+                { "$set": { "seen": [] } }
+            )
+            //Grab their Duplicates
+            sessions.findOne({sessionid: (req.body.sessionid)}, function (err, result){
+              if (result) {
+              }
+              exclude = result.seen;
+              //console.log('Result: '+ JSON.stringify(result.seen));
+              console.log('exlcu11: '+exclude);
+              //Exclude seen
+              memes.find({ "_id": {"$nin": exclude}}).sort({created_on:-1}).skip(skip).limit(limit).project( {_id: 1} ).map(x => x._id).toArray((err, items) => {
+                console.log('items!: '+JSON.stringify(items));
                 sessions.updateOne(
-                  { sessionid: (req.body.sessionid), "seen.0": { "$exists": false } },
-                  { sessionid: (req.body.sessionid),"$set": { "seen": ["initial"] } }
-                  , upsert=true
-              )
-              //Grab their Duplicates
-              sessions.findOne({sessionid: (req.body.sessionid)}, function (err, result){
-                /*if (err){ 
-                sessions.insertOne({sessionid: (req.body.sessionid)}, { "$set": { "seen": ["initial"] } })
-                }*/
-                if (result) {
+                  {sessionid: (req.body.sessionid)},
+                  { $push:{ seen: { $each: items } }}
+                  );
                   
-                }
-                exclude = result.seen;
-                //Exclude seen and fetch next set of _ids
-                memes.find({ "_id": {"$nin": exclude}}).sort({created_on:-1}).skip(skip).limit(limit).project( {_id: 1} ).map(x => x._id).toArray((err, items) => {
+                  memes.find({ "_id": {"$in": items}}).sort({created_on:-1}).toArray((err, items) => {
+                    //console.log('items!: '+JSON.stringify(items));
+                  res.send(JSON.stringify(items));
+                  });
 
-                  //Push next set of _ids to 'seen' array
-                  sessions.updateOne(
-                    {sessionid: (req.body.sessionid)},
-                    { $push:{ seen: { $each: items } }}
-                    );
-                    
-                    //Fetch the images in that set of _ids and send to browser
-                    memes.find({ "_id": {"$in": items}}).sort({created_on:-1}).toArray((err, items) => {
-                    res.send(JSON.stringify(items));
-                    });
-                });
               });
-              
-//Increment master counter
+
+            });
+            
+
+
 memeshot.updateOne(
-      { loads: 'loads' },
-      { $inc:{ memeshot: 1 }}
-   );
-//Increment user-specific counter   
+    { loads: 'loads' },
+    { $inc:{ memeshot: 1 }}
+ );
 memeshot.findOne({sessionid: (req.body.sessionid)}, (err, match) => {
 if(match){
-   memeshot.updateOne(
-      { sessionid: req.body.sessionid },
-      { $inc:{ memeshot: 1 }}
-   )
-  }else{
-   memeshot.insertOne(
-      { sessionid: req.body.sessionid },
-      { $inc:{ memeshot: 1 }}
-   )
-  };
+ memeshot.updateOne(
+    { sessionid: req.body.sessionid },
+    { $inc:{ memeshot: 1 }}
+ )
+}else{
+ memeshot.insertOne(
+    { sessionid: req.body.sessionid },
+    { $inc:{ memeshot: 1 }}
+ )
+};
 });
 
-//If including Duplicates
-}else{
+          //If including Duplicates
+          }else{
 
 memes.find().sort({created_on:-1}).skip(skip).limit(limit).toArray((err, items) => {
 res.send(JSON.stringify(items));
 });
 
 memeshot.updateOne(
-      { loads: 'loads' },
-      { $inc:{ memeshot: 1 }}
-   );
+    { loads: 'loads' },
+    { $inc:{ memeshot: 1 }}
+ );
 memeshot.findOne({sessionid: (req.body.sessionid)}, (err, match) => {
 if(match){
-   memeshot.updateOne(
-      { sessionid: req.body.sessionid },
-      { $inc:{ memeshot: 1 }}
-   )
-  }else{
-   memeshot.insertOne(
-      { sessionid: req.body.sessionid },
-      { $inc:{ memeshot: 1 }}
-   )
-  };
+ memeshot.updateOne(
+    { sessionid: req.body.sessionid },
+    { $inc:{ memeshot: 1 }}
+ )
+}else{
+ memeshot.insertOne(
+    { sessionid: req.body.sessionid },
+    { $inc:{ memeshot: 1 }}
+ )
+};
 });
 
-//Close Else/Dupe  
-}
+          }
+
 //Close Mongo Connect
 });
 //Close POST call
