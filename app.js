@@ -206,8 +206,8 @@ app.post('/memeshot', function (req, res, next) {
           if (nodup==1){
             //Find the user's session
               sessions.updateOne(
-                { sessionid: (req.body.sessionid), "seen.0": { "$exists": false } },
-                { "$set": { "seen": [] } }
+                {sessionid: (req.body.sessionid)},
+                { $set:{ seen: ["init1", "init2"] }}
                 , upsert=true
             )
             //Grab their Duplicates
