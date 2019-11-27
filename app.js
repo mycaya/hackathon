@@ -142,6 +142,9 @@ app.use('/', home);
 const memes = require('./pages/memes/memes');
 app.use('/', memes);
 
+const admin = require('./pages/admin/admin');
+app.use('/', admin);
+
 const test = require('./pages/test/test');
 app.use('/', test);
 
@@ -159,6 +162,9 @@ app.use('/', infinite);
 
 const scroll = require('./pages/scroll/scroll');
 app.use('/', scroll);
+
+const files = require('./pages/files/files');
+app.use('/', files);
 
 //APIs
 
