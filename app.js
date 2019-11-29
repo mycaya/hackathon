@@ -242,7 +242,7 @@ app.post('/memeshot', function (req, res, next) {
               */
               //Find content, excluding seen
               //console.log(qdoc);
-              memes.find(qdoc).sort({created_on:-1}).skip(skip).limit(limit).project( {_id: 1} ).map(x => x._id).toArray((err, items) => {
+              memes.find(qdoc).sort({qual:1}).skip(skip).limit(limit).project( {_id: 1} ).map(x => x._id).toArray((err, items) => {
                 //Copy found content items into Seen array
                 sessions.updateOne(
                   {sessionid: (req.body.sessionid)},
