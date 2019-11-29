@@ -192,7 +192,7 @@
 		</div>
 	</div>
 
-	<!--================ Content ===============
+	<!--================ Content =================-->
 <div id="content">
 	{{#each items}}
 	  	<div style="background-color: #e0e0e0; " class="wrapper style2">
@@ -205,82 +205,86 @@
 				<form action="/moar" method="post" target="hiddenFrame">
 					<button name="id" value="{{_id}}" style="position: relative; float: right" class="btn btn-success">More like this in my feed</button>
 				</form>
+<div>
+				<h4>"f"</h4></div>
 
+				      <div class="col-md-12">
+        <h2>{{link}}</h2>
+		<h2>{{tags}}xxx</h2>
+        <!--==={{#with tags.[1]}}
+        <p>{{this}}ds</p>
+        {{/each}}==-->
+      </div>
+
+				<form action="/tagvague" method="post" target="hiddenFrame">
+					<button name="id" value="{{_id}}" class="btn btn-success">vague</button>
+				</form>
+				
+				<form action="/tagrelationship" method="post" target="hiddenFrame">
+					<button name="id" value="{{_id}}" class="btn btn-success">relationship</button>
+				</form>
+				
+				<form action="/taghotboy" method="post" target="hiddenFrame">
+					<button name="id" value="{{_id}}" class="btn btn-success">hotboy</button>
+				</form>
+				
+				<form action="/taghotgirl" method="post" target="hiddenFrame">
+					<button name="id" value="{{_id}}" class="btn btn-success">hotgirl</button>
+				</form>
+				
+				<form action="/tagporn" method="post" target="hiddenFrame">
+					<button name="id" value="{{_id}}" class="btn btn-success">porn</button>
+				</form>
+				
+				<form action="/tagparenting" method="post" target="hiddenFrame">
+					<button name="id" value="{{_id}}" class="btn btn-success">parenting</button>
+				</form>
+				
+				<form action="/tagschool" method="post" target="hiddenFrame">
+					<button name="id" value="{{_id}}" class="btn btn-success">school</button>
+				</form>
+				
+				<form action="/taghistory" method="post" target="hiddenFrame">
+					<button name="id" value="{{_id}}" class="btn btn-success">history</button>
+				</form>
+								
+				<form action="/tagsex" method="post" target="hiddenFrame">
+					<button name="id" value="{{_id}}" class="btn btn-success">sex</button>
+				</form>
+				
 			</article>
 		</div>
 	{{/each}}
-</div>==-->
+</div>
 
 <!--================ Feed =================-->
-<div id="content"></div>
+
 
 
 <script>
-//Counter for any query stream
-var n = 0;
 
-//Default tags to search for
-var tags = ["best"];
-
-//When page loads, run Increment function
-$( document ).ready(addBoxes);
-
-//Detect when page near bottom
 $(window).scroll(function() {
    if($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
-	   //Call increment function
+	   //alert("near bottom!");
 		inc();
    }
 });
 
-//Runs on click of a "Moar" button
-/*$(".btnmoar").on('click', function(event){
-    //event.stopPropagation();
-    //event.stopImmediatePropagation();
-    //(... rest of your JS code)
-	//var id_model = $('.btnmoar').val();
-    //alert(id_model);
-	//alert('1 wks');
-});*/
+
+var n = 0;
 
 
-$(document).on('click', '.btnmoar', function () {
-    // your function here
-	var soughttags = $('.btnmoar').val();
-	tags = soughttags;
-	n = 0;
-	inc();
-    //alert(id_model);
-});
-
-$(document).on('click', '.btnflag', function () {
-    // your function here
-	var id = $('.btnflag').val();
-
-	var data = {"id": id};	
-jQuery.ajax({
-    type: 'POST',
-	url: '/nsfw',
-    dataType: 'json', // ** ensure you add this line **
-  data: data
-});
-});
-
-
-//Increments meme page
+//increments meme page
 function inc() {
-     //Call add function
+     n++;
 	 addBoxes(1);
-	 n++;
  };
 
-//Grabs session ID from page
 var sessionnum = "{{session}}";
 
-//Calls for more data
 function addBoxes (amount) {
 var skipspot = n * 10;
-var data = {"limit": 10, "skip": skipspot, "sessionid": sessionnum, "tags": tags};	
+var data = {"limit": 10, "skip": skipspot, "sessionid": sessionnum};	
 jQuery.ajax({
     type: 'POST',
 	url: '/memeshot',
@@ -288,13 +292,7 @@ jQuery.ajax({
   data: data,
     success: function(data) {
 		$.each(data,function ( i, item ) {
-    $('#content').append("<div style='background-color: #e0e0e0;' class='wrapper style2'>"+
-		"<article class='imgcontainer special'><div class=img4'></div><a href='#' class='image featured'><img src=" + data[i].link + " /></a>"+
-		"<button value=" + data[i].tags + " style='position: relative; float: left' class='btnflag'>Inappropriate.</button>"+
-		//"<form action='/nsfw' method='post' target='hiddenFrame'><button name='id' value=" + data[i]._id + " style='position: relative; float: left' class='btn btn-success'>This is so offensive!</button></form>"+
-		"<button value=" + data[i].tags + " style='position: relative; float: right' class='btnmoar'>More like this in my feed.</button>"+
-		//"<form action='/moar' method='post' target='hiddenFrame'><button name='id' value=" + data[i]._id + " style='position: relative; float: right' class='btn btn-success'>More like this in my feed</button></form>"+
-		"</article></div>");
+    $('#content').append("<div style='background-color: #e0e0e0;' class='wrapper style2'><article class='imgcontainer special'><div class=img4'></div><a href='#' class='image featured'><img src=" + data[i].link + " /></a><form action='/nsfw' method='post' target='hiddenFrame'><button name='id' value=" + data[i]._id + " style='position: relative; float: left' class='btn btn-success'>This is so offensive!</button></form><form action='/moar' method='post' target='hiddenFrame'><button name='id' value=" + data[i]._id + " style='position: relative; float: right' class='btn btn-success'>More like this in my feed</button></form></article></div>");
  });
     }
 });

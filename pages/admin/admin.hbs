@@ -192,7 +192,7 @@
 		</div>
 	</div>
 
-	<!--================ Content =================-->
+	<!--================ Content ===============
 <div id="content">
 	{{#each items}}
 	  	<div style="background-color: #e0e0e0; " class="wrapper style2">
@@ -206,75 +206,76 @@
 					<button name="id" value="{{_id}}" style="position: relative; float: right" class="btn btn-success">More like this in my feed</button>
 				</form>
 
-				<form action="/tagvague" method="post" target="hiddenFrame">
-					<button name="id" value="{{_id}}" class="btn btn-success">vague</button>
-				</form>
-				
-				<form action="/tagrelationship" method="post" target="hiddenFrame">
-					<button name="id" value="{{_id}}" class="btn btn-success">relationship</button>
-				</form>
-				
-				<form action="/taghotboy" method="post" target="hiddenFrame">
-					<button name="id" value="{{_id}}" class="btn btn-success">hotboy</button>
-				</form>
-				
-				<form action="/taghotgirl" method="post" target="hiddenFrame">
-					<button name="id" value="{{_id}}" class="btn btn-success">hotgirl</button>
-				</form>
-				
-				<form action="/tagporn" method="post" target="hiddenFrame">
-					<button name="id" value="{{_id}}" class="btn btn-success">porn</button>
-				</form>
-				
-				<form action="/tagparenting" method="post" target="hiddenFrame">
-					<button name="id" value="{{_id}}" class="btn btn-success">parenting</button>
-				</form>
-				
-				<form action="/tagschool" method="post" target="hiddenFrame">
-					<button name="id" value="{{_id}}" class="btn btn-success">school</button>
-				</form>
-				
-				<form action="/taghistory" method="post" target="hiddenFrame">
-					<button name="id" value="{{_id}}" class="btn btn-success">history</button>
-				</form>
-								
-				<form action="/tagsex" method="post" target="hiddenFrame">
-					<button name="id" value="{{_id}}" class="btn btn-success">sex</button>
-				</form>
-				
 			</article>
 		</div>
 	{{/each}}
-</div>
+</div>==-->
 
 <!--================ Feed =================-->
-
+<div id="content"></div>
 
 
 <script>
+//Counter for any query stream
+var n = 0;
 
+//Default tags to search for
+var tags = null;
+
+//When page loads, run Increment function
+$( document ).ready(addBoxes);
+
+//Detect when page near bottom
 $(window).scroll(function() {
    if($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
-	   //alert("near bottom!");
+	   //Call increment function
 		inc();
    }
 });
 
+//Runs on click of a "Moar" button
+/*$(".btnmoar").on('click', function(event){
+    //event.stopPropagation();
+    //event.stopImmediatePropagation();
+    //(... rest of your JS code)
+	//var id_model = $('.btnmoar').val();
+    //alert(id_model);
+	//alert('1 wks');
+});*/
 
-var n = 0;
+
+$(document).on('click', '.btnmoar', function () {
+    // your function here
+	var soughttags = $('.btnmoar').val();
+	tags = soughttags;
+	n = 0;
+	inc();
+    //alert(id_model);
+});
 
 
-//increments meme page
+//Increments meme page
 function inc() {
-     n++;
+     //Call add function
 	 addBoxes(1);
+	 n++;
  };
 
+//Grabs session ID from page
 var sessionnum = "{{session}}";
 
+//Calls for more data
 function addBoxes (amount) {
 var skipspot = n * 10;
-var data = {"limit": 10, "skip": skipspot, "sessionid": sessionnum};	
+
+              if (tags == null) {
+                // do something 
+                var data = {"limit": 10, "skip": skipspot, "sessionid": sessionnum};	
+              }else{
+                var data = {"limit": 10, "skip": skipspot, "sessionid": sessionnum, "tags": tags};	
+              };
+
+//var data = {"limit": 10, "skip": skipspot, "sessionid": sessionnum, "tags": tags};	
 jQuery.ajax({
     type: 'POST',
 	url: '/memeshot',
@@ -282,11 +283,105 @@ jQuery.ajax({
   data: data,
     success: function(data) {
 		$.each(data,function ( i, item ) {
-    $('#content').append("<div style='background-color: #e0e0e0;' class='wrapper style2'><article class='imgcontainer special'><div class=img4'></div><a href='#' class='image featured'><img src=" + data[i].link + " /></a><form action='/nsfw' method='post' target='hiddenFrame'><button name='id' value=" + data[i]._id + " style='position: relative; float: left' class='btn btn-success'>This is so offensive!</button></form><form action='/moar' method='post' target='hiddenFrame'><button name='id' value=" + data[i]._id + " style='position: relative; float: right' class='btn btn-success'>More like this in my feed</button></form></article></div>");
+    $('#content').append("<div style='background-color: #e0e0e0;' class='wrapper style2'>"+
+		"<article class='imgcontainer special'><div class=img4'></div><a href='#' class='image featured'><img src=" + data[i].link + " /></a>"+
+		"<div><h4>" + data[i].tags + "</h4></div>"+
+		//"<div><h4>"{{this._id}}"</h4></div>"+
+		"<button value=" + data[i]._id + " style='position: relative' class='btndelete'>DELETE</button>"+
+
+		"<button value=" + data[i]._id + " data-val='1' style='position: relative' class='btnqual'>1</button>"+
+		"<button value=" + data[i]._id + " data-val='2' style='position: relative' class='btnqual'>2</button>"+
+		"<button value=" + data[i]._id + " data-val='3' style='position: relative' class='btnqual'>3</button>"+
+		"<button value=" + data[i]._id + " data-val='4' style='position: relative' class='btnqual'>4</button>"+
+		"<button value=" + data[i]._id + " data-val='5' style='position: relative' class='btnqual'>5</button>"+
+		"<button value=" + data[i]._id + " data-val='6' style='position: relative' class='btnqual'>6</button>"+
+		"<button value=" + data[i]._id + " data-val='7' style='position: relative' class='btnqual'>7</button>"+
+		"<button value=" + data[i]._id + " data-val='8' style='position: relative' class='btnqual'>8</button>"+
+		"<button value=" + data[i]._id + " data-val='9' style='position: relative' class='btnqual'>9</button>"+
+
+		"<button value='" + data[i]._id + "' data-val='best' style='position: relative' class='btntag'>best</button>"+
+		"<button value=" + data[i]._id + " data-val='relationship' style='position: relative' class='btntag'>relationship</button>"+
+		"<button value=" + data[i]._id + " data-val='parenting' style='position: relative' class='btntag'>parenting</button>"+
+		"<button value=" + data[i]._id + " data-val='school' style='position: relative' class='btntag'>school</button>"+
+		"<button value=" + data[i]._id + " data-val='sex' style='position: relative' class='btntag'>sex</button>"+
+		"<button value=" + data[i]._id + " data-val='awkward' style='position: relative' class='btntag'>awkward</button>"+
+		"<button value=" + data[i]._id + " data-val='vague' style='position: relative' class='btntag'>vague</button>"+
+		"<button value=" + data[i]._id + " data-val='absurd' style='position: relative' class='btntag'>absurd</button>"+
+		"<button value=" + data[i]._id + " data-val='men' style='position: relative' class='btntag'>men</button>"+
+		"<button value=" + data[i]._id + " data-val='women' style='position: relative' class='btntag'>women</button>"+
+		"<button value=" + data[i]._id + " data-val='hotboi' style='position: relative' class='btntag'>hotboi</button>"+
+		"<button value=" + data[i]._id + " data-val='hotgurl' style='position: relative' class='btntag'>hotgurl</button>"+
+		"<button value=" + data[i]._id + " data-val='history' style='position: relative' class='btntag'>history</button>"+
+		"<button value=" + data[i]._id + " data-val='christian' style='position: relative' class='btntag'>christian</button>"+
+		"<button value=" + data[i]._id + " data-val='michigan' style='position: relative' class='btntag'>michigan</button>"+
+		"<button value=" + data[i]._id + " data-val='homeshool' style='position: relative' class='btntag'>homeschool</button>"+
+		"<button value=" + data[i]._id + " data-val='bitchy' style='position: relative' class='btntag'>bitchy</button>"+
+		"<button value=" + data[i]._id + " data-val='dramatic' style='position: relative' class='btntag'>dramatic</button>"+
+		"<button value=" + data[i]._id + " data-val='dating' style='position: relative' class='btntag'>dating</button>"+
+		"<button value=" + data[i]._id + " data-val='politics' style='position: relative' class='btntag'>politics</button>"+
+		"<button value=" + data[i]._id + " data-val='porn' style='position: relative' class='btntag'>porn</button>"+
+		"<button value=" + data[i]._id + " data-val='friends' style='position: relative' class='btntag'>friends</button>"+
+		"<button value=" + data[i]._id + " data-val='fail' style='position: relative' class='btntag'>fail</button>"+
+		"<button value=" + data[i]._id + " data-val='girls' style='position: relative' class='btntag'>girls</button>"+
+		"<button value=" + data[i]._id + " data-val='boys' style='position: relative' class='btntag'>boys</button>"+
+		"<button value=" + data[i]._id + " data-val='work' style='position: relative' class='btntag'>work</button>"+
+		"<button value=" + data[i]._id + " data-val='it' style='position: relative' class='btntag'>it</button>"+
+		"<button value=" + data[i]._id + " data-val='moms' style='position: relative' class='btntag'>moms</button>"+
+		"<button value=" + data[i]._id + " data-val='dads' style='position: relative' class='btntag'>dads</button>"+
+		"<button value=" + data[i]._id + " data-val='exes' style='position: relative' class='btntag'>exes</button>"+
+		"<button value=" + data[i]._id + " data-val='loser' style='position: relative' class='btntag'>loser</button>"+
+		"<button value=" + data[i]._id + " data-val='shy' style='position: relative' class='btntag'>shy</button>"+
+		"<button value=" + data[i]._id + " data-val='creep' style='position: relative' class='btntag'>creep</button>"+		
+		"<button value=" + data[i]._id + " data-val='horror' style='position: relative' class='btntag'>horror</button>"+				
+		"<button value=" + data[i]._id + " data-val='pop' style='position: relative' class='btntag'>pop</button>"+
+
+		"</article></div>");
  });
     }
 });
 };
+
+$(document).on('click', '.btntag', function () {
+    // your function here
+	var id = $(this).val();
+	var tag = $(this).data("val");
+
+	var data = {"id": id, "tag": tag};	
+jQuery.ajax({
+    type: 'POST',
+	url: '/addtag',
+    dataType: 'json', // ** ensure you add this line **
+  data: data
+});
+});
+
+$(document).on('click', '.btnqual', function () {
+    // your function here
+	var id = $(this).val();
+	var qual = $(this).data("val");
+
+	var data = {"id": id, "qual": qual};	
+jQuery.ajax({
+    type: 'POST',
+	url: '/memequal',
+    dataType: 'json', // ** ensure you add this line **
+  data: data
+});
+});
+
+$(document).on('click', '.btndelete', function () {
+    // your function here
+	var id = $(this).val();
+
+	var data = {"id": id};	
+jQuery.ajax({
+    type: 'POST',
+	url: '/addtag',
+    dataType: 'json', // ** ensure you add this line **
+  data: data
+});
+});
+
 
 </script>
 

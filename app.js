@@ -20,6 +20,7 @@ const sass = require('node-sass-middleware');
 const multer = require('multer');
 const https = require('https');
 const fs = require('fs');
+var ObjectID = require('mongodb').ObjectID;
 
 //Framework to display a web page
 var app = express();
@@ -193,11 +194,17 @@ app.post('/catchr', function (req, res, next) {
 
 //var router = require('express').Router();
 app.post('/memeshot', function (req, res, next) {
-  console.log('memeshot: '+(JSON.stringify(req.body)));
+
+  //Prep request details into variables
   const limit = parseInt(req.body.limit) || 4;
   const skip = parseInt(req.body.skip) || 0;
+  console.log("req.body.tags! : "+req.body.tags);
+  const tags = req.body.tags;
+  console.log("tags! : "+tags);
+
+
+  //Switch - 1 means No Dupe mode is on
   const nodup = 1;
-  //var exclude = '';
 
   const url = 'mongodb://localhost:27017'
   mongo.connect(url, (err, client) => {
@@ -210,7 +217,7 @@ app.post('/memeshot', function (req, res, next) {
           const sessions = db.collection('session')
           //If we're using No Duplicates..
           if (nodup==1){
-            //Find the user's session
+            //Find the user's session by updating only if incomplete
               sessions.update(
                         {sessionid: (req.body.sessionid)},
                         {
@@ -221,19 +228,29 @@ app.post('/memeshot', function (req, res, next) {
             //Grab their Duplicates
             sessions.findOne({sessionid: (req.body.sessionid)}, function (err, result){
               exclude = result.seen;
-              
-              console.log('Result: '+ JSON.stringify(result.seen));
-              console.log('exlcu11: '+exclude);
-              //Exclude seen
-              memes.find({ "_id": {"$nin": exclude}}).sort({created_on:-1}).skip(skip).limit(limit).project( {_id: 1} ).map(x => x._id).toArray((err, items) => {
-                console.log('items!: '+JSON.stringify(items));
+
+              if (tags == null) {
+                // do something 
+                var qdoc = {"_id": {"$nin": exclude}};
+              }else{
+                var qdoc = { "_id": {"$nin": exclude}, tags: {"$in": tags}};
+              };
+/*
+              let iddoc = '"_id": {"$nin": exclude}';
+              if tags
+              let tagdoc = ', tags: {"$in": tags}' || '';
+              */
+              //Find content, excluding seen
+              console.log(qdoc);
+              memes.find(qdoc).sort({created_on:-1}).skip(skip).limit(limit).project( {_id: 1} ).map(x => x._id).toArray((err, items) => {
+                //Copy found content items into Seen array
                 sessions.updateOne(
                   {sessionid: (req.body.sessionid)},
                   { $push:{ seen: { $each: items } }}
                   );
-                  
+                  //Fetch found content items
                   memes.find({ "_id": {"$in": items}}).sort({created_on:-1}).toArray((err, items) => {
-                    //console.log('items!: '+JSON.stringify(items));
+                  //Send found content to browser  
                   res.send(JSON.stringify(items));
                   });
 
@@ -293,6 +310,62 @@ if(match){
 //Close POST call
 })
 
+app.post('/addtag', function (req, res, next) {
+  console.log('addtag!: '+JSON.stringify(req.body));
+ const tag = req.body.tag || "defaulttag";
+ const id = req.body.id;
+ var o_id = new ObjectID(id);
+ console.log('oid!: '+o_id);
+ const url = 'mongodb://localhost:27017'
+ mongo.connect(url, (err, client) => {
+   if (err) {
+       console.error(err)
+       }
+   const db = client.db('figeur')
+   const collection = db.collection('memes')
+           collection.updateOne(
+            { _id: o_id },
+            {$push: { tags: tag } }
+         )
+});
+});
+
+app.post('/memequal', function (req, res, next) {
+  console.log('memequal!: '+JSON.stringify(req.body));
+  const qual = req.body.qual || "defaultqual";
+  const id = req.body.id;
+  var o_id = new ObjectID(id);
+  console.log('oid!: '+o_id);
+  const url = 'mongodb://localhost:27017'
+  mongo.connect(url, (err, client) => {
+    if (err) {
+        console.error(err)
+        }
+    const db = client.db('figeur')
+    const collection = db.collection('memes')
+            collection.updateOne(
+             { '_id': o_id },
+             { qual: qual } 
+          )
+ });
+ });
+
+app.post('/deletememe', function (req, res, next) {
+  console.log('deletememe!: '+JSON.stringify(req.body));
+  const id = req.body.id;
+  var o_id = new ObjectID(id);
+  const url = 'mongodb://localhost:27017'
+  mongo.connect(url, (err, client) => {
+    if (err) {
+        console.error(err)
+        }
+    const db = client.db('figeur')
+    const collection = db.collection('memes')
+            collection.deleteOne(
+             { _id: o_id }
+          )
+ });
+ });
 
 app.post('/moar', function (req, res, next) {
   console.log('moar: '+(req.body));
