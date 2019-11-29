@@ -345,7 +345,7 @@ app.post('/memequal', function (req, res, next) {
     const collection = db.collection('memes')
             collection.updateOne(
              { '_id': o_id },
-             { qual: qual } 
+             {$set:{ qual: qual } }
           )
  });
  });
@@ -361,7 +361,7 @@ app.post('/deletememe', function (req, res, next) {
         }
     const db = client.db('figeur')
     const collection = db.collection('memes')
-            collection.deleteOne(
+            collection.delete(
              { _id: o_id }
           )
  });
