@@ -247,7 +247,7 @@ $(window).scroll(function() {
 
 $(document).on('click', '.btnmoar', function () {
     // your function here
-	var soughttags = $('.btnmoar').val();
+	var soughttags = $(this).val();
 	tags = soughttags;
 	n = 0;
 	inc();
@@ -256,7 +256,7 @@ $(document).on('click', '.btnmoar', function () {
 
 $(document).on('click', '.btnflag', function () {
     // your function here
-	var id = $('.btnflag').val();
+	var id = $(this).val();
 
 	var data = {"id": id};	
 jQuery.ajax({
