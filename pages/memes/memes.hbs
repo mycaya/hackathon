@@ -281,7 +281,15 @@ var sessionnum = "{{session}}";
 //Calls for more data
 function addBoxes (amount) {
 var skipspot = n * 10;
-var data = {"limit": 10, "skip": skipspot, "sessionid": sessionnum, "tags": tags};	
+
+              if (tags == null) {
+                // do something 
+                var data = {"limit": 10, "skip": skipspot, "sessionid": sessionnum};	
+              }else{
+                var data = {"limit": 10, "skip": skipspot, "sessionid": sessionnum, "tags": tags};	
+              };
+
+//var data = {"limit": 10, "skip": skipspot, "sessionid": sessionnum, "tags": tags};	
 jQuery.ajax({
     type: 'POST',
 	url: '/memeshot',
