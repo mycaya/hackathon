@@ -287,53 +287,61 @@ jQuery.ajax({
 		"<article class='imgcontainer special'><div class=img4'></div><a href='#' class='image featured'><img src=" + data[i].link + " /></a>"+
 		"<div><h4>" + data[i].tags + "</h4></div>"+
 		//"<div><h4>"{{this._id}}"</h4></div>"+
-		"<button value=" + data[i]._id + " style='position: relative' class='btndelete'>DELETE</button>"+
+		"<button value=" + data[i]._id + " style='position: relative; margin: 10px' class='btndelete'>DELETE</button>"+
 
-		"<button value=" + data[i]._id + " data-val='1' style='position: relative' class='btnqual'>1</button>"+
-		"<button value=" + data[i]._id + " data-val='2' style='position: relative' class='btnqual'>2</button>"+
-		"<button value=" + data[i]._id + " data-val='3' style='position: relative' class='btnqual'>3</button>"+
-		"<button value=" + data[i]._id + " data-val='4' style='position: relative' class='btnqual'>4</button>"+
-		"<button value=" + data[i]._id + " data-val='5' style='position: relative' class='btnqual'>5</button>"+
-		"<button value=" + data[i]._id + " data-val='6' style='position: relative' class='btnqual'>6</button>"+
-		"<button value=" + data[i]._id + " data-val='7' style='position: relative' class='btnqual'>7</button>"+
-		"<button value=" + data[i]._id + " data-val='8' style='position: relative' class='btnqual'>8</button>"+
-		"<button value=" + data[i]._id + " data-val='9' style='position: relative' class='btnqual'>9</button>"+
+		"<button value=" + data[i]._id + " data-val='1' style='position: relative; margin: 10px' class='btnqual'>1</button>"+
+		"<button value=" + data[i]._id + " data-val='2' style='position: relative; margin: 10px' class='btnqual'>2</button>"+
+		"<button value=" + data[i]._id + " data-val='3' style='position: relative; margin: 10px' class='btnqual'>3</button>"+
+		"<button value=" + data[i]._id + " data-val='4' style='position: relative; margin: 10px' class='btnqual'>4</button>"+
+		"<button value=" + data[i]._id + " data-val='5' style='position: relative; margin: 10px' class='btnqual'>5</button>"+
+		"<button value=" + data[i]._id + " data-val='6' style='position: relative; margin: 10px' class='btnqual'>6</button>"+
+		"<button value=" + data[i]._id + " data-val='7' style='position: relative; margin: 10px' class='btnqual'>7</button>"+
+		"<button value=" + data[i]._id + " data-val='8' style='position: relative; margin: 10px' class='btnqual'>8</button>"+
+		"<button value=" + data[i]._id + " data-val='9' style='position: relative; margin: 10px' class='btnqual'>9</button>"+
 
-		"<button value='" + data[i]._id + "' data-val='best' style='position: relative' class='btntag'>best</button>"+
-		"<button value=" + data[i]._id + " data-val='relationship' style='position: relative' class='btntag'>relationship</button>"+
-		"<button value=" + data[i]._id + " data-val='parenting' style='position: relative' class='btntag'>parenting</button>"+
-		"<button value=" + data[i]._id + " data-val='school' style='position: relative' class='btntag'>school</button>"+
-		"<button value=" + data[i]._id + " data-val='sex' style='position: relative' class='btntag'>sex</button>"+
-		"<button value=" + data[i]._id + " data-val='awkward' style='position: relative' class='btntag'>awkward</button>"+
-		"<button value=" + data[i]._id + " data-val='vague' style='position: relative' class='btntag'>vague</button>"+
-		"<button value=" + data[i]._id + " data-val='absurd' style='position: relative' class='btntag'>absurd</button>"+
-		"<button value=" + data[i]._id + " data-val='men' style='position: relative' class='btntag'>men</button>"+
-		"<button value=" + data[i]._id + " data-val='women' style='position: relative' class='btntag'>women</button>"+
-		"<button value=" + data[i]._id + " data-val='hotboi' style='position: relative' class='btntag'>hotboi</button>"+
-		"<button value=" + data[i]._id + " data-val='hotgurl' style='position: relative' class='btntag'>hotgurl</button>"+
-		"<button value=" + data[i]._id + " data-val='history' style='position: relative' class='btntag'>history</button>"+
-		"<button value=" + data[i]._id + " data-val='christian' style='position: relative' class='btntag'>christian</button>"+
-		"<button value=" + data[i]._id + " data-val='michigan' style='position: relative' class='btntag'>michigan</button>"+
-		"<button value=" + data[i]._id + " data-val='homeshool' style='position: relative' class='btntag'>homeschool</button>"+
-		"<button value=" + data[i]._id + " data-val='bitchy' style='position: relative' class='btntag'>bitchy</button>"+
-		"<button value=" + data[i]._id + " data-val='dramatic' style='position: relative' class='btntag'>dramatic</button>"+
-		"<button value=" + data[i]._id + " data-val='dating' style='position: relative' class='btntag'>dating</button>"+
-		"<button value=" + data[i]._id + " data-val='politics' style='position: relative' class='btntag'>politics</button>"+
-		"<button value=" + data[i]._id + " data-val='porn' style='position: relative' class='btntag'>porn</button>"+
-		"<button value=" + data[i]._id + " data-val='friends' style='position: relative' class='btntag'>friends</button>"+
-		"<button value=" + data[i]._id + " data-val='fail' style='position: relative' class='btntag'>fail</button>"+
-		"<button value=" + data[i]._id + " data-val='girls' style='position: relative' class='btntag'>girls</button>"+
-		"<button value=" + data[i]._id + " data-val='boys' style='position: relative' class='btntag'>boys</button>"+
-		"<button value=" + data[i]._id + " data-val='work' style='position: relative' class='btntag'>work</button>"+
-		"<button value=" + data[i]._id + " data-val='it' style='position: relative' class='btntag'>it</button>"+
-		"<button value=" + data[i]._id + " data-val='moms' style='position: relative' class='btntag'>moms</button>"+
-		"<button value=" + data[i]._id + " data-val='dads' style='position: relative' class='btntag'>dads</button>"+
-		"<button value=" + data[i]._id + " data-val='exes' style='position: relative' class='btntag'>exes</button>"+
-		"<button value=" + data[i]._id + " data-val='loser' style='position: relative' class='btntag'>loser</button>"+
-		"<button value=" + data[i]._id + " data-val='shy' style='position: relative' class='btntag'>shy</button>"+
-		"<button value=" + data[i]._id + " data-val='creep' style='position: relative' class='btntag'>creep</button>"+		
-		"<button value=" + data[i]._id + " data-val='horror' style='position: relative' class='btntag'>horror</button>"+				
-		"<button value=" + data[i]._id + " data-val='pop' style='position: relative' class='btntag'>pop</button>"+
+		"<button value='" + data[i]._id + "' data-val='best' style='position: relative; margin: 7px' class='btntag'>best</button>"+
+		"<button value=" + data[i]._id + " data-val='relationship' style='position: relative; margin: 7px' class='btntag'>relationship</button>"+
+		"<button value=" + data[i]._id + " data-val='parenting' style='position: relative; margin: 7px' class='btntag'>parenting</button>"+
+		"<button value=" + data[i]._id + " data-val='school' style='position: relative; margin: 7px' class='btntag'>school</button>"+
+		"<button value=" + data[i]._id + " data-val='sex' style='position: relative; margin: 7px' class='btntag'>sex</button>"+
+		"<button value=" + data[i]._id + " data-val='awkward' style='position: relative; margin: 7px' class='btntag'>awkward</button>"+
+		"<button value=" + data[i]._id + " data-val='vague' style='position: relative; margin: 7px' class='btntag'>vague</button>"+
+		"<button value=" + data[i]._id + " data-val='absurd' style='position: relative; margin: 7px' class='btntag'>absurd</button>"+
+		"<button value=" + data[i]._id + " data-val='men' style='position: relative; margin: 7px' class='btntag'>men</button>"+
+		"<button value=" + data[i]._id + " data-val='women' style='position: relative; margin: 7px' class='btntag'>women</button>"+
+		"<button value=" + data[i]._id + " data-val='hotboi' style='position: relative; margin: 7px' class='btntag'>hotboi</button>"+
+		"<button value=" + data[i]._id + " data-val='hotgurl' style='position: relative; margin: 7px' class='btntag'>hotgurl</button>"+
+		"<button value=" + data[i]._id + " data-val='history' style='position: relative; margin: 7px' class='btntag'>history</button>"+
+		"<button value=" + data[i]._id + " data-val='christian' style='position: relative; margin: 7px' class='btntag'>christian</button>"+
+		"<button value=" + data[i]._id + " data-val='michigan' style='position: relative; margin: 7px' class='btntag'>michigan</button>"+
+		"<button value=" + data[i]._id + " data-val='homeshool' style='position: relative; margin: 7px' class='btntag'>homeschool</button>"+
+		"<button value=" + data[i]._id + " data-val='bitchy' style='position: relative; margin: 7px' class='btntag'>bitchy</button>"+
+		"<button value=" + data[i]._id + " data-val='dramatic' style='position: relative; margin: 7px' class='btntag'>dramatic</button>"+
+		"<button value=" + data[i]._id + " data-val='dating' style='position: relative; margin: 7px' class='btntag'>dating</button>"+
+		"<button value=" + data[i]._id + " data-val='politics' style='position: relative; margin: 7px' class='btntag'>politics</button>"+
+		"<button value=" + data[i]._id + " data-val='porn' style='position: relative; margin: 7px' class='btntag'>porn</button>"+
+		"<button value=" + data[i]._id + " data-val='friends' style='position: relative; margin: 7px' class='btntag'>friends</button>"+
+		"<button value=" + data[i]._id + " data-val='fail' style='position: relative; margin: 7px' class='btntag'>fail</button>"+
+		"<button value=" + data[i]._id + " data-val='usgirls' style='position: relative; margin: 7px' class='btntag'>usgirls</button>"+
+		"<button value=" + data[i]._id + " data-val='usboys' style='position: relative; margin: 7px' class='btntag'>usboys</button>"+
+		"<button value=" + data[i]._id + " data-val='themgirls' style='position: relative; margin: 7px' class='btntag'>themgirls</button>"+
+		"<button value=" + data[i]._id + " data-val='themboys' style='position: relative; margin: 7px' class='btntag'>themboys</button>"+
+		"<button value=" + data[i]._id + " data-val='work' style='position: relative; margin: 7px' class='btntag'>work</button>"+
+		"<button value=" + data[i]._id + " data-val='it' style='position: relative; margin: 7px' class='btntag'>it</button>"+
+		"<button value=" + data[i]._id + " data-val='moms' style='position: relative; margin: 7px' class='btntag'>moms</button>"+
+		"<button value=" + data[i]._id + " data-val='dads' style='position: relative; margin: 7px' class='btntag'>dads</button>"+
+		"<button value=" + data[i]._id + " data-val='exes' style='position: relative; margin: 7px' class='btntag'>exes</button>"+
+		"<button value=" + data[i]._id + " data-val='loser' style='position: relative; margin: 7px' class='btntag'>loser</button>"+
+		"<button value=" + data[i]._id + " data-val='shy' style='position: relative; margin: 7px' class='btntag'>shy</button>"+
+		"<button value=" + data[i]._id + " data-val='creep' style='position: relative; margin: 7px' class='btntag'>creep</button>"+		
+		"<button value=" + data[i]._id + " data-val='horror' style='position: relative; margin: 7px' class='btntag'>horror</button>"+				
+		"<button value=" + data[i]._id + " data-val='pop' style='position: relative; margin: 7px' class='btntag'>pop</button>"+
+		"<button value=" + data[i]._id + " data-val='savage' style='position: relative; margin: 7px' class='btntag'>savage</button>"+
+		"<button value=" + data[i]._id + " data-val='dumb' style='position: relative; margin: 7px' class='btntag'>dumb</button>"+
+		"<button value=" + data[i]._id + " data-val='hood' style='position: relative; margin: 7px' class='btntag'>hood</button>"+
+		"<button value=" + data[i]._id + " data-val='redneck' style='position: relative; margin: 7px' class='btntag'>redneck</button>"+
+		"<button value=" + data[i]._id + " data-val='poor' style='position: relative; margin: 7px' class='btntag'>poor</button>"+
+		"<button value=" + data[i]._id + " data-val='fake' style='position: relative; margin: 7px' class='btntag'>fake</button>"+
 
 		"</article></div>");
  });
@@ -376,7 +384,7 @@ $(document).on('click', '.btndelete', function () {
 	var data = {"id": id};	
 jQuery.ajax({
     type: 'POST',
-	url: '/addtag',
+	url: '/deletememe',
     dataType: 'json', // ** ensure you add this line **
   data: data
 });

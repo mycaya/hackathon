@@ -187,7 +187,7 @@ app.use('/', nsfw);
 app.use(bodyParser.urlencoded())
 app.use(bodyParser.json())
 app.post('/catchr', function (req, res, next) {
-    console.log('Hit catchr: '+(req.body));
+    //console.log('Hit catchr: '+(req.body));
     //res.send('Hit catchr: '+(JSON.stringify(req.body)));
     res.send('Hit catchr: '+ JSON.stringify(req.body));
 })
@@ -198,9 +198,9 @@ app.post('/memeshot', function (req, res, next) {
   //Prep request details into variables
   const limit = parseInt(req.body.limit) || 4;
   const skip = parseInt(req.body.skip) || 0;
-  console.log("req.body.tags! : "+req.body.tags);
+  //console.log("req.body.tags! : "+req.body.tags);
   const tags = req.body.tags;
-  console.log("tags! : "+tags);
+  //console.log("tags! : "+tags);
 
 
   //Switch - 1 means No Dupe mode is on
@@ -241,7 +241,7 @@ app.post('/memeshot', function (req, res, next) {
               let tagdoc = ', tags: {"$in": tags}' || '';
               */
               //Find content, excluding seen
-              console.log(qdoc);
+              //console.log(qdoc);
               memes.find(qdoc).sort({created_on:-1}).skip(skip).limit(limit).project( {_id: 1} ).map(x => x._id).toArray((err, items) => {
                 //Copy found content items into Seen array
                 sessions.updateOne(
@@ -311,11 +311,11 @@ if(match){
 })
 
 app.post('/addtag', function (req, res, next) {
-  console.log('addtag!: '+JSON.stringify(req.body));
+  //console.log('addtag!: '+JSON.stringify(req.body));
  const tag = req.body.tag || "defaulttag";
  const id = req.body.id;
  var o_id = new ObjectID(id);
- console.log('oid!: '+o_id);
+ //console.log('oid!: '+o_id);
  const url = 'mongodb://localhost:27017'
  mongo.connect(url, (err, client) => {
    if (err) {
@@ -331,11 +331,11 @@ app.post('/addtag', function (req, res, next) {
 });
 
 app.post('/memequal', function (req, res, next) {
-  console.log('memequal!: '+JSON.stringify(req.body));
+  //console.log('memequal!: '+JSON.stringify(req.body));
   const qual = req.body.qual || "defaultqual";
   const id = req.body.id;
   var o_id = new ObjectID(id);
-  console.log('oid!: '+o_id);
+  //console.log('oid!: '+o_id);
   const url = 'mongodb://localhost:27017'
   mongo.connect(url, (err, client) => {
     if (err) {
@@ -351,7 +351,7 @@ app.post('/memequal', function (req, res, next) {
  });
 
 app.post('/deletememe', function (req, res, next) {
-  console.log('deletememe!: '+JSON.stringify(req.body));
+  //console.log('deletememe!: '+JSON.stringify(req.body));
   const id = req.body.id;
   var o_id = new ObjectID(id);
   const url = 'mongodb://localhost:27017'
@@ -361,14 +361,14 @@ app.post('/deletememe', function (req, res, next) {
         }
     const db = client.db('figeur')
     const collection = db.collection('memes')
-            collection.delete(
+            collection.remove(
              { _id: o_id }
           )
  });
  });
 
 app.post('/moar', function (req, res, next) {
-  console.log('moar: '+(req.body));
+  //console.log('moar: '+(req.body));
  //res.send('Hit catchr: '+(JSON.stringify(req.body)));
 
  const url = 'mongodb://localhost:27017'
@@ -381,7 +381,7 @@ app.post('/moar', function (req, res, next) {
            let doc = {
             _id: _id
            };
-           console.log(doc);
+           //console.log(doc);
            collection.insert(doc, (err, doc) => {
            //res.json(doc);
            });
