@@ -50,7 +50,7 @@ router.post('/upload', upload.array('files'/*maxnumberofuploads, 3*/), (req, res
                 'created_on' : new Date(),
                 //randy: 95,
                 tags: ['christian'],
-                qual: '3',
+                qual: '7',
                 user: req.user
             };
             console.log(doc);
