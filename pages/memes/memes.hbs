@@ -248,7 +248,7 @@ $(window).scroll(function() {
 $(document).on('click', '.btnmoar', function () {
     // your function here
 	var soughttags = $(this).val();
-	tags = soughttags;
+	tags = soughttags.split(",");
 	n = 0;
 	inc();
     //alert(id_model);
@@ -281,7 +281,6 @@ var sessionnum = "{{session}}";
 //Calls for more data
 function addBoxes (amount) {
 var skipspot = n * 10;
-
               if (tags == null) {
                 // do something 
                 var data = {"limit": 10, "skip": skipspot, "sessionid": sessionnum};	

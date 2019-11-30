@@ -228,20 +228,15 @@ app.post('/memeshot', function (req, res, next) {
             //Grab their Duplicates
             sessions.findOne({sessionid: (req.body.sessionid)}, function (err, result){
               exclude = result.seen;
-
+              //console.log("tags variable!: "+tags);
               if (tags == null) {
                 // do something 
                 var qdoc = {"_id": {"$nin": exclude}};
               }else{
                 var qdoc = { "_id": {"$nin": exclude}, tags: {"$in": tags}};
               };
-/*
-              let iddoc = '"_id": {"$nin": exclude}';
-              if tags
-              let tagdoc = ', tags: {"$in": tags}' || '';
-              */
               //Find content, excluding seen
-              //console.log(qdoc);
+              //console.log("query doc!: "+JSON.stringify(qdoc));
               memes.find(qdoc).sort({qual:1}).skip(skip).limit(limit).project( {_id: 1} ).map(x => x._id).toArray((err, items) => {
                 //Copy found content items into Seen array
                 sessions.updateOne(
@@ -251,6 +246,7 @@ app.post('/memeshot', function (req, res, next) {
                   //Fetch found content items
                   memes.find({ "_id": {"$in": items}}).sort({created_on:-1}).toArray((err, items) => {
                   //Send found content to browser  
+                  //console.log("items sent to browser!: "+JSON.stringify(items));
                   res.send(JSON.stringify(items));
                   });
 
