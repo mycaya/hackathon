@@ -48,7 +48,10 @@
 
 <body style="background-color: #e0e0e0">
 
-
+<!-- ==Facebook SDK===-->
+<!-- <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v5.0&appId=2424070964534047&autoLogAppEvents=1"></script>
+=-->
 	<!-- ================ Side Menu Area =================-->
 	<div class="side_menu">
 		<ul class="list menu_right">
@@ -249,6 +252,11 @@ $(document).on('click', '.btnmoar', function () {
     // your function here
 	var soughttags = $(this).val();
 	tags = soughttags.split(",");
+	for( var i = 0; i < tags.length; i++){ 
+   		if ( tags[i] === "best") {
+     tags.splice(i, 1); 
+   }
+}
 	n = 0;
 	inc();
     //alert(id_model);
@@ -300,6 +308,7 @@ jQuery.ajax({
 		"<article class='imgcontainer special'><div class=img4'></div><a href='#' class='image featured'><img src=" + data[i].link + " /></a>"+
 		"<button value=" + data[i].tags + " style='position: relative; float: left' class='btnflag'>Inappropriate.</button>"+
 		//"<form action='/nsfw' method='post' target='hiddenFrame'><button name='id' value=" + data[i]._id + " style='position: relative; float: left' class='btn btn-success'>This is so offensive!</button></form>"+
+		//"<div class='fb-share-button' data-href='https://figeur.com' data-layout='button_count' data-size='small'><a target='_blank' href='https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ffigeur.com%2F&amp;src=sdkpreparse' class='fb-xfbml-parse-ignore'>Share</a></div>"+
 		"<button value=" + data[i].tags + " style='position: relative; float: right' class='btnmoar'>More like this in my feed.</button>"+
 		//"<form action='/moar' method='post' target='hiddenFrame'><button name='id' value=" + data[i]._id + " style='position: relative; float: right' class='btn btn-success'>More like this in my feed</button></form>"+
 		"</article></div>");
