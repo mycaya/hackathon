@@ -49,8 +49,8 @@ router.post('/upload', upload.array('files'/*maxnumberofuploads, 3*/), (req, res
                 link: "https://figeur.s3.us-east-2.amazonaws.com/"+thiselement.originalname,
                 'created_on' : new Date(),
                 //randy: 95,
-                tags: ['christian'],
-                qual: '7',
+                tags: ['best'],
+                qual: '2',
                 user: req.user
             };
             console.log(doc);
