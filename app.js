@@ -131,7 +131,7 @@ app.use('/webfonts', express.static(path.join(__dirname, 'node_modules/@fortawes
 
 //Redirect all traffic to login untill ADFS federation
 app.get('/', (req, res) => {
-  res.redirect('/memes');
+  res.redirect('/meme');
 });
 
 app.use(express.static('public'));
