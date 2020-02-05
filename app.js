@@ -67,7 +67,7 @@ mongoose.connection.on('error', (err) => {
  * Express configuration.
  */
 app.set('host', process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0');
-app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 80);
+app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 81);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(expressStatusMonitor());
@@ -142,6 +142,12 @@ app.use('/', home);
 
 const memes = require('./pages/memes/memes');
 app.use('/', memes);
+
+const meme = require('./pages/meme/meme');
+app.use('/', meme);
+
+const mem = require('./pages/mem/mem');
+app.use('/', mem);
 
 const admin = require('./pages/admin/admin');
 app.use('/', admin);

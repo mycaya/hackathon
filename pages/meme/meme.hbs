@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en">
+
+<!--===============================================================================================
+HEAD-->
+
+<head>
+
+	    <!-- ==============================================
+		Title and Meta Tags
+		=============================================== -->
+		<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">  
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Figeur - Find the freshest memes. Theft them.</title>
+		<link rel="icon" href="img/favicon.PNG" type="image/png">
+		<meta name="description" content="Where Meme Lords are born." />
+        <meta name="keywords" content="memes, dank, dankest memes, freshest memes, savage memes, obscure memes, savage, memelord" />
+        <meta property="og:title" content="Figeur - Find the freshest memes. Theft them." />
+        <meta property="og:url" content="figeur.com" />
+        <meta property="og:description" content="Where Meme Lords are born." />		
+
+	    <!-- ==============================================
+		CSS
+		=============================================== -->
+        <link type="text/css" href="css/photo.css" rel="stylesheet" />
+		<!--=========Solely for pop-up login content========-->	
+		<link type="text/css" href="css/main.css" rel="stylesheet" />
+		<!--=========For dropdown menu, etc==================================-->
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<!--=========For Upload icon==================================-->
+		<link rel="stylesheet" type="text/css" href="font/flaticon.css">
+		<!--=========For Rounded ellipsis==================================-->
+		<script src="https://kit.fontawesome.com/6e969de0c7.js" crossorigin="anonymous"></script>
+		<!--=========This is fast, but ellipsese don't work==================================-->
+		<!--<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">-->
+		<!--=========For JS? No HTML effect==================================-->
+		<script type="text/javascript" src="js/lib/jquery.min.js"></script>
+		<script type="text/javascript" src="js/examples.js"></script>
+		<script type="text/javascript" src="scrollmagic/uncompressed/ScrollMagic.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+</head>
+
+<!--===============================================================================================
+END HEAD-->
+
+<body style="background-color: #e0e0e0">
+
+<!-- ==Facebook SDK===-->
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v5.0&appId=2424070964534047&autoLogAppEvents=1"></script>
+
+
+	<!-- ================ Side Menu Area =================-->
+	<div class="side_menu">
+		<ul class="list menu_right">
+			{{#if user}}
+			<img src={{user.profile.picture}} vertical-align="left" width="50px" height="50px" border-radius="50%">
+			<li>
+				<a href="/logout">Logout</a>
+			</li>			
+			{{/if}}
+{{#unless user}}
+			<li>
+				<a id="reglogin" onclick="$('.hover_bkgr_fricc2').show()">Login</a>
+			</li>
+{{/unless}}
+
+		</ul>
+	</div>
+
+
+	<!--================ Side Menu Icon =================-->
+	<div class="canvus_menu">
+		<div class="container">
+			<div class="float-right">
+				<div class="toggle_icon" title="Menu">
+					<span></span>
+				</div>
+			</div>
+			<div class="float-left">
+				<div class="toggle_icon_figeur" title="Home">
+					<span></span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!--================ Logged-in Upload Icon =================-->
+{{#if user}}
+	<div class="footer">
+		<div class="upload-btn-wrapper" title="Upload a Meme">
+			<form ref='uploadForm' 
+      		id='uploadForm' 
+      		action='/upload' 
+      		method='post' 
+      		encType="multipart/form-data">
+  			<button class="btn4" ><i class="flaticon-upload"></i></button>
+  				<input type="file" onchange="this.form.submit()" name="files" multiple="multiple"/>
+			</form>
+		</div>
+	</div>
+{{/if}}
+
+
+	<!--================ Unauthenticated Upload Icon =================-->
+{{#unless user}}	
+	<div class="footer">
+		<div class="upload-btn-wrapper" title="Upload a Meme">
+			<form ref='uploadForm' 
+      		id='uploadForm' 
+      		action='/upload' 
+      		method='post' 
+      		encType="multipart/form-data">
+  			<button class="btn4" ><i class="flaticon-upload"></i></button>
+  				<input type="file" onchange="$('.hover_bkgr_fricc').show()" name="files" multiple="multiple"/>
+			</form>
+		</div>
+	</div>
+{{/unless}}		
+
+	<!--================ Page Top Area =================-->
+
+
+	<!--================ Regular Log-in =================-->
+	<div class="hover_bkgr_fricc2">
+	    <span class="helper"></span>
+	    <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
+
+				<form class="login100-form validate-form flex-sb flex-w">
+					<span class="login100-form-title p-b-33">
+						Log in with
+					</span>			
+
+					<a href="/auth/facebook" class="btn-face m-b-20">
+						<img src="images/icons/icon-face.png">
+							Facebook
+					</a>
+
+					<a href="/auth/google" class="btn-google m-b-20">
+						<img src="images/icons/icon-google.png" alt="GOOGLE">
+						Google
+					</a>
+				</form>
+		</div>
+	</div>	  
+
+
+	<!--================ Upload Log-in =================-->
+	<div class="hover_bkgr_fricc">
+	    <span class="helper"></span>
+	    <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
+
+				<form class="login100-form validate-form flex-sb flex-w">
+					<span class="login100-form-title p-b-33">
+						Get credit for your posts
+						<br>
+						<p>Continue with</p>
+					</span>			
+
+					<a href="/auth/facebook" class="btn-face m-b-20">
+						<img src="images/icons/icon-face.png">
+							Facebook
+					</a>
+
+					<a href="/auth/google" class="btn-google m-b-20">
+						<img src="images/icons/icon-google.png" alt="GOOGLE">
+						Google
+					</a>
+				</form>
+					<div class="container-login100-form-btn m-t-17">
+						<button class="login100-form-btn">
+							No thanks, continue anonymously
+						</button>
+					</div>
+		</div>
+	</div>
+
+	 <!-- ==============================================
+	 News Feed Section
+	 =============================================== --> 
+	 <section class="newsfeed">
+	  <div class="container-fluid">
+	   <div class="row">
+		   
+	    <div class="col-lg-3">
+		</div><!--/ col-lg-3 -->
+	
+	    <div class="col-lg-6" id="content">
+
+	<!--================ Card 1 =================-->
+         <div class="cardbox">
+          <div class="cardbox-heading">
+           <!-- START dropdown-->
+           <div class="dropdown pull-right" style="position:absolute; right: 15px; margin:0; top: 50%; transform: translate(0, -50%); z-index:1;">
+				
+            <button class="btn btn-link btn-flat btn-flat-icon" type="button" data-toggle="dropdown" aria-expanded="false">
+		     <em class="fa fa-ellipsis-v"></em>
+			</button>
+            <div class="dropdown-menu dropdown-scale dropdown-menu-right" role="menu" style="position: absolute; transform: translate3d(-136px, 28px, 0px); top: 0px; left: 0px; will-change: transform; z-index:1;">
+			 <a class="dropdown-item" href="#">Follow</a>
+			 <a class="dropdown-item" href="#">Hide this user's posts</a>
+			 <a class="dropdown-item" href="#">Report user</a>
+            </div>
+           </div><!--/ dropdown -->
+           <!-- END dropdown-->
+           <div class="media m-0">
+            <div class="d-flex mr-3">
+			 <a href="#"><img class="img-responsive img-circle" src="img/users/1.jpg" alt="User"></a>
+			</div>
+            <div class="media-body">
+			 
+             <p class="m-0" style="position:absolute; margin:0; top: 50%; transform: translate(0, -50%);">Benjamin Robinson</p>
+            </div>
+           </div><!--/ media -->
+          </div><!--/ cardbox-heading -->
+          
+		  <div class="cardbox-item" style="border-top: 1px solid rgb(236, 236, 236); border-bottom: 1px solid rgb(236, 236, 236);">
+		   <a href="#myModal" data-toggle="modal">
+		    <img class="img-responsive" style="object-fit: contain; margin:0 auto; min-width: 360px;" src="img/posts/1.jpg" alt="MaterialImg">
+		   </a> 
+          </div><!--/ cardbox-item -->
+	      	<div class="cardbox-base" style="position:relative; padding: 40px; z-index:2;">
+				<div class="dropdown pull-right" style="position:absolute; right: 15px; margin:0; top: 50%; transform: translate(0, -50%);">
+				
+						<button class="btn btn-link btn-flat btn-flat-icon" type="button" data-toggle="dropdown" aria-expanded="false">
+						 <em class="fa fa-ellipsis-v"></em>
+						</button>
+						<div class="dropdown-menu dropdown-scale dropdown-menu-right" role="menu" style="position: absolute; transform: translate3d(-136px, 28px, 0px); top: 0px; left: 0px; will-change: transform; z-index:1;">
+						 <a class="dropdown-item" href="#">View entire collection</a>
+						 <a class="dropdown-item" href="#">Share</a>
+						 <a class="dropdown-item" href="#">Save to my collection</a>
+						 <a class="dropdown-item" href="#">Download</a>
+						 <a class="dropdown-item" href="#">Report post</a>
+						</div>
+				</div><!--/ dropdown -->
+					   <!-- END dropdown-->
+				<div>
+							<a href="" class="btn" style="background: #fc4a1a;  /* fallback for old browsers */
+							background: -webkit-linear-gradient(to right, #f7b733, #fc4a1a);  /* Chrome 10-25, Safari 5.1-6 */
+							background: linear-gradient(to right, #f7b733, #fc4a1a); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+							color: #fff;
+							border: 3px solid #eee; border-radius: 35px; position:absolute; left: 12%; margin:0; top: 50%; transform: translate(0, -50%);"><i class="fa fa-edit"></i> Do it better</a>
+				</div><!--/ dropdown -->
+				<div>
+								<a href="" class="btn" style="background: #ec008c;  /* fallback for old browsers */
+								background: -webkit-linear-gradient(to right, #fc6767, #ec008c);  /* Chrome 10-25, Safari 5.1-6 */
+								background: linear-gradient(to right, #fc6767, #ec008c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+								color: #fff;
+								border: 3px solid #eee; border-radius: 35px; position:absolute; right: 12%; margin:0; top: 50%; transform: translate(0, -50%);"><i class="fa fa-heart"></i> More/Like</a>
+				</div><!--/ dropdown -->
+		  	</div><!--/ cardbox-base -->      
+		 </div><!--/ cardbox -->	
+
+	<!--================ Card 1 =================-->
+		<div class="cardbox">
+          <div class="cardbox-heading" style="position:relative; z-index:1;">
+           <!-- START dropdown-->
+           <div class="dropdown pull-right" style="position:absolute; right: 15px; margin:0; top: 50%; transform: translate(0, -50%); z-index:1;">
+				
+            <button class="btn btn-link btn-flat btn-flat-icon" type="button" data-toggle="dropdown" aria-expanded="false">
+		     <em class="fa fa-ellipsis-v"></em>
+			</button>
+            <div class="dropdown-menu dropdown-scale dropdown-menu-right" role="menu" style="position: absolute; transform: translate3d(-136px, 28px, 0px); top: 0px; left: 0px; will-change: transform; z-index:1;">
+			 <a class="dropdown-item" href="#">Follow</a>
+			 <a class="dropdown-item" href="#">Hide this user's posts</a>
+			 <a class="dropdown-item" href="#">Report user</a>
+            </div>
+           </div><!--/ dropdown -->
+           <!-- END dropdown-->
+           <div class="media m-0">
+            <div class="d-flex mr-3">
+			 <a href="#"><img class="img-responsive img-circle" src="img/users/download.png" alt="User"></a>
+			</div>
+            <div class="media-body">
+			 
+             <p class="m-0" style="position:absolute; margin:0; top: 50%; transform: translate(0, -50%);">Anonymous</p>
+            </div>
+           </div><!--/ media -->
+          </div><!--/ cardbox-heading -->
+          
+		  <div class="cardbox-item" style="border-top: 1px solid rgb(236, 236, 236); border-bottom: 1px solid rgb(236, 236, 236);">
+		   <a href="#myModal" data-toggle="modal">
+		    <img class="img-responsive" style="object-fit: contain; margin:0 auto; min-width: 360px;" src="img/posts/2.jpg" alt="MaterialImg">
+		   </a> 
+          </div><!--/ cardbox-item -->
+	      	<div class="cardbox-base" style="position:relative; padding: 40px; z-index:2;">
+				<div class="dropdown pull-right" style="position:absolute; right: 15px; margin:0; top: 50%; transform: translate(0, -50%);">
+				
+						<button class="btn btn-link btn-flat btn-flat-icon" type="button" data-toggle="dropdown" aria-expanded="false">
+						 <em class="fa fa-ellipsis-v"></em>
+						</button>
+						<div class="dropdown-menu dropdown-scale dropdown-menu-right" role="menu" style="position: absolute; transform: translate3d(-136px, 28px, 0px); top: 0px; left: 0px; will-change: transform; z-index:1;">
+						 <a class="dropdown-item" href="#">View entire collection</a>
+						 <a class="dropdown-item" href="#">Share</a>
+						 <a class="dropdown-item" href="#">Save to my collection</a>
+						 <a class="dropdown-item" href="#">Download</a>
+						 <a class="dropdown-item" href="#">Report post</a>
+						</div>
+				</div><!--/ dropdown -->
+					   <!-- END dropdown-->
+				<div>
+							<a href="" class="btn" style="background: #fc4a1a;  /* fallback for old browsers */
+							background: -webkit-linear-gradient(to right, #f7b733, #fc4a1a);  /* Chrome 10-25, Safari 5.1-6 */
+							background: linear-gradient(to right, #f7b733, #fc4a1a); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+							color: #fff;
+							border: 3px solid #eee; border-radius: 35px; position:absolute; left: 12%; margin:0; top: 50%; transform: translate(0, -50%);"><i class="fa fa-edit"></i> Do it better</a>
+				</div><!--/ dropdown -->
+				<div>
+								<a href="" class="btn" style="background: #ec008c;  /* fallback for old browsers */
+								background: -webkit-linear-gradient(to right, #fc6767, #ec008c);  /* Chrome 10-25, Safari 5.1-6 */
+								background: linear-gradient(to right, #fc6767, #ec008c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+								color: #fff;
+								border: 3px solid #eee; border-radius: 35px; position:absolute; right: 12%; margin:0; top: 50%; transform: translate(0, -50%);"><i class="fa fa-heart"></i> More/Like</a>
+				</div><!--/ dropdown -->
+		  	</div><!--/ cardbox-base -->
+		 </div><!--/ cardbox -->	
+
+
+
+		</div>	<!--/ col-lg-6 -->
+
+		<div class="col-lg-3">
+		</div><!--/ col-lg-3 -->
+		
+	   </div><!--/ row -->
+	  </div><!--/ container -->
+	 </section><!--/ newsfeed -->
+
+
+
+<script>
+//Counter for any query stream
+var n = 0;
+
+//Default tags to search for
+var tags = ["best"];
+//var tags = null;
+
+//When page loads, run Increment function
+$( document ).ready(addBoxes);
+
+//Detect when page near bottom
+$(window).scroll(function() {
+   if($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
+	   //Call increment function
+		inc();
+   }
+});
+
+$(document).on('click', '.btnmoar', function () {
+    // your function here
+	var soughttags = $(this).val();
+	tags = soughttags.split(",");
+	for( var i = 0; i < tags.length; i++){ 
+   		if ( tags[i] === "best") {
+     tags.splice(i, 1); 
+   }
+}
+	n = 0;
+	inc();
+    //alert(id_model);
+});
+
+$(document).on('click', '.btnflag', function () {
+    // your function here
+	var id = $(this).val();
+
+	var data = {"id": id};	
+jQuery.ajax({
+    type: 'POST',
+	url: '/nsfw',
+    dataType: 'json', // ** ensure you add this line **
+  data: data
+});
+});
+
+
+//Increments meme page
+function inc() {
+     //Call add function
+	 addBoxes(1);
+	 n++;
+ };
+
+//Grabs session ID from page
+var sessionnum = "{{session}}";
+
+//Calls for more data
+function addBoxes (amount) {
+var skipspot = n * 10;
+              if (tags == null) {
+                // do something 
+                var data = {"limit": 10, "skip": skipspot, "sessionid": sessionnum};	
+              }else{
+                var data = {"limit": 10, "skip": skipspot, "sessionid": sessionnum, "tags": tags};	
+              };
+
+//var data = {"limit": 10, "skip": skipspot, "sessionid": sessionnum, "tags": tags};	
+jQuery.ajax({
+    type: 'POST',
+	url: '/memeshot',
+    dataType: 'json', // ** ensure you add this line **
+  data: data,
+    success: function(data) {
+		$.each(data,function ( i, item ) {
+    $('#content').append("<div class='cardbox'>"+
+          "<div class='cardbox-heading' style='position:relative; z-index:1;'>"+
+			  
+           (data[i].user ? "<div class='dropdown pull-right' style='position:absolute; right: 15px; margin:0; top: 50%; transform: translate(0, -50%); z-index:1;'>"+
+            "<button class='btn btn-link btn-flat btn-flat-icon' type='button' data-toggle='dropdown' aria-expanded='false'>"+
+		     "<em class='fa fa-ellipsis-v'></em>"+
+			"</button>"+
+            "<div class='dropdown-menu dropdown-scale dropdown-menu-right' role='menu' style='position: absolute; transform: translate3d(-136px, 28px, 0px); top: 0px; left: 0px; will-change: transform; z-index:1;'>"+
+			 "<a class='dropdown-item' href='#'>Follow</a>"+
+			 "<a class='dropdown-item' href='#'>Hide this user's posts</a>"+
+			 "<a class='dropdown-item' href='#'>Report user</a>"+
+            "</div>"+
+           "</div>" : "")+ 
+
+           "<div class='media m-0'>"+
+            "<div class='d-flex mr-3'>"+
+			 "<a href='#'><img class='img-responsive img-circle'"+ 
+			 (data[i].user ? "src=" + data[i].user.profile.picture + " " :"src='img/users/download.png'")+ 
+			 
+			 "alt='Image not found'></a>"+
+			"</div>"+
+            "<div class='media-body'>"+
+             "<p class='m-0' style='position:absolute; margin:0; top: 50%; transform: translate(0, -50%);'>"+ 
+				 (data[i].user ? data[i].user.profile.name :"Anonymous")+ 
+				 
+				 "</p>"+
+            "</div>"+
+           "</div>"+
+          "</div>"+
+		  "<div class='cardbox-item' style='border-top: 1px solid rgb(236, 236, 236); border-bottom: 1px solid rgb(236, 236, 236);'>"+
+		   "<a href='#myModal' data-toggle='modal'>"+
+		    "<img class='img-responsive' style='object-fit: contain; margin:0 auto; min-width: 360px;' src=" + data[i].link + " alt='MaterialImg'>"+
+		   "</a> "+
+          "</div>"+
+	      	"<div class='cardbox-base' style='position:relative; padding: 40px; z-index:2;'>"+
+				"<div class='dropdown pull-right' style='position:absolute; right: 15px; margin:0; top: 50%; transform: translate(0, -50%);'>"+
+						"<button class='btn btn-link btn-flat btn-flat-icon' type='button' data-toggle='dropdown' aria-expanded='false'>"+
+						 "<em class='fa fa-ellipsis-v'></em>"+
+						"</button>"+
+						"<div class='dropdown-menu dropdown-scale dropdown-menu-right' role='menu' style='position: absolute; transform: translate3d(-136px, 28px, 0px); top: 0px; left: 0px; will-change: transform; z-index:1;'>"+
+						 "<a class='dropdown-item' href='#'>View entire collection</a>"+
+						 "<a class='dropdown-item' href='#'>Share</a>"+
+						 "<a class='dropdown-item' href='#'>Save to my collection</a>"+
+						 "<a class='dropdown-item' href='#'>Download</a>"+
+						 "<a class='dropdown-item' href='#'>Report post</a>"+
+						"</div>"+
+				"</div>"+
+				"<div>"+
+							"<a href='' class='btn btn4' style='background: #fc4a1a;  /* fallback for old browsers */"+
+							"background: -webkit-linear-gradient(to right, #f7b733, #fc4a1a);  /* Chrome 10-25, Safari 5.1-6 */"+
+							"background: linear-gradient(to right, #f7b733, #fc4a1a); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */"+
+							"color: #fff;"+
+							"border: 3px solid #eee; border-radius: 35px; position:absolute; left: 12%; margin:0; top: 50%; transform: translate(0, -50%);'><i class='fa fa-edit'></i> Do it better</a>"+
+				"</div>"+
+				"<div>"+
+								"<a href='' class='btn btnmoar' style='background: #ec008c;  /* fallback for old browsers */"+
+								"background: -webkit-linear-gradient(to right, #fc6767, #ec008c);  /* Chrome 10-25, Safari 5.1-6 */"+
+								"background: linear-gradient(to right, #fc6767, #ec008c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */"+
+								"color: #fff;"+
+								"border: 3px solid #eee; border-radius: 35px; position:absolute; right: 12%; margin:0; top: 50%; transform: translate(0, -50%);'><i class='fa fa-heart'></i> More/Like</a>"+
+				"</div>"+
+		  	"</div>"+
+		 "</div>");
+ });
+    }
+});
+};
+
+	// Log-in Popup
+
+    $('.hover_bkgr_fricc').click(function(){
+        $('.hover_bkgr_fricc').hide();
+    });
+	//login100-form-btn is No Thanks button
+    $('.login100-form-btn').click(function(){
+		document.getElementById("uploadForm").submit();
+    });
+
+	    $('.hover_bkgr_fricc2').click(function(){
+        $('.hover_bkgr_fricc2').hide();
+    });
+//});
+</script>
+
+<iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+	<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/theme.js"></script>
+	<script src="js/jquery-migrate-3.0.1.min.js"></script>
+	<script src="js/jquery.stellar.min.js"></script>
+	<script src="js/aos.js"></script>
+	<script src="js/main.js"></script>
+
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="vendor/select2/select2.min.js"></script>
+	<script src="vendor/daterangepicker/moment.min.js"></script>
+	<script src="vendor/daterangepicker/daterangepicker.js"></script>
+	<script src="vendor/countdowntime/countdowntime.js"></script>
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/base.js"></script>
+	<script src="plugins/slimscroll/jquery.slimscroll.js"></script>
+
+</body>
+</html>

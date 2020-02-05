@@ -1,0 +1,497 @@
+/* Home Banner Area css
+============================================================================================ */
+.open .side_menu {
+  right: 0px; }
+.open .canvus_menu .toggle_icon span {
+  background: transparent !important; }
+  .open .canvus_menu .toggle_icon span:before {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+    top: 0px;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out; }
+  .open .canvus_menu .toggle_icon span:after {
+    width: 30px;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    bottom: 0px;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out; }
+
+.canvus_menu {
+  overflow: hidden;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: 10;
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 30px; }
+  .canvus_menu .toggle_icon {
+    cursor: pointer;
+    position: fixed;
+    height: 20px;
+    width: 30px;
+    top: 25px;
+    right: 50px;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+    background: transparent;
+    padding: 20px;
+    z-index: 9998; }
+    @media (max-width: 575px) {
+      .canvus_menu .toggle_icon {
+        right: 30px; } }
+    .canvus_menu .toggle_icon span {
+      height: 3px;
+      width: 30px;
+      display: block;
+      background: #222222;
+      cursor: pointer;
+      position: absolute;
+      right: 0px;
+      top: 50%;
+      -webkit-transition: all 0.5s ease-in-out;
+      -moz-transition: all 0.5s ease-in-out;
+      -o-transition: all 0.5s ease-in-out;
+      transition: all 0.5s ease-in-out; }
+      .canvus_menu .toggle_icon span:before {
+        content: "";
+        height: 3px;
+        width: 30px;
+        display: block;
+        background: #222222;
+        right: 0px;
+        top: -10px;
+        position: absolute;
+        -webkit-transition: all 0.5s ease-in-out;
+        -moz-transition: all 0.5s ease-in-out;
+        -o-transition: all 0.5s ease-in-out;
+        transition: all 0.5s ease-in-out; }
+      .canvus_menu .toggle_icon span:after {
+        content: "";
+        height: 3px;
+        width: 30px;
+        display: block;
+        background: #222222;
+        right: 0px;
+        bottom: -10px;
+        position: absolute;
+        -webkit-transition: all 0.5s ease-in-out;
+        -moz-transition: all 0.5s ease-in-out;
+        -o-transition: all 0.5s ease-in-out;
+        transition: all 0.5s ease-in-out; }
+    .canvus_menu .toggle_icon.blog span {
+      background: #ffffff; }
+      .canvus_menu .toggle_icon.blog span:after, .canvus_menu .toggle_icon.blog span:before {
+        background: #ffffff; }
+  .canvus_menu .toggle_icon_figeur {
+    cursor: pointer;
+    position: fixed;
+    height: 20px;
+    width: 30px;
+    top: 25px;
+    left: 50px;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+    background: transparent;
+    padding: 20px;
+    z-index: 9999; }
+    @media (max-width: 575px) {
+      .canvus_menu .toggle_icon_figeur {
+        left: 30px; } }
+    .canvus_menu .toggle_icon_figeur span {
+    height: 3px;
+    width: 20px;
+    display: block;
+    background: #222222;
+    cursor: pointer;
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out; }
+    .canvus_menu .toggle_icon_figeur span:before {
+      content: "";
+      height: 3px;
+      width: 30px;
+      display: block;
+      background: #222222;
+      left: 0px;
+      top: -10px;
+      position: absolute;
+      -webkit-transition: all 0.5s ease-in-out;
+      -moz-transition: all 0.5s ease-in-out;
+      -o-transition: all 0.5s ease-in-out;
+      transition: all 0.5s ease-in-out; }
+    .canvus_menu .toggle_icon_figeur span:after {
+      content: "";
+      height: 20px;
+      width: 3px;
+      display: block;
+      background: #222222;
+      left: 0px;
+      bottom: -10px;
+      position: absolute;
+      -webkit-transition: all 0.5s ease-in-out;
+      -moz-transition: all 0.5s ease-in-out;
+      -o-transition: all 0.5s ease-in-out;
+      transition: all 0.5s ease-in-out; }
+    .canvus_menu .toggle_icon_figeur.blog span {
+      background: #ffffff; }
+      .canvus_menu .toggle_icon_figeur.blog span:after, .canvus_menu .toggle_icon.blog span:before {
+        background: #ffffff; }
+        
+.side_menu {
+  position: fixed;
+  right: -33%;
+  top: 0px;
+  height: 100%;
+  background: #f9f9ff;
+  width: 100%;
+  max-width: 33%;
+  text-align: center;
+  padding-left: 20px;
+  z-index: 2;
+  padding-right: 20px;
+  -webkit-transition: all 0.3s ease 0s;
+  -moz-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  opacity: .95; }
+  @media (max-width: 575px) {
+    .side_menu {
+      max-width: 75%;
+      right: -75%; } }
+  .side_menu .input-group {
+    display: block;
+    position: relative; }
+    .side_menu .input-group input {
+      width: 100%;
+      border: none;
+      border-radius: 0px;
+      height: 40px;
+      padding: 0px 28px 0px 15px;
+      background: #f5ca56;
+      line-height: 40px;
+      font-size: 12px;
+      color: #fff;
+      font-family: "Roboto", sans-serif;
+      outline: none;
+      box-shadow: none; }
+      .side_menu .input-group input.placeholder {
+        font-size: 12px;
+        color: #fff;
+        font-family: "Roboto", sans-serif; }
+      .side_menu .input-group input:-moz-placeholder {
+        font-size: 12px;
+        color: #fff;
+        font-family: "Roboto", sans-serif; }
+      .side_menu .input-group input::-moz-placeholder {
+        font-size: 12px;
+        color: #fff;
+        font-family: "Roboto", sans-serif; }
+      .side_menu .input-group input::-webkit-input-placeholder {
+        font-size: 12px;
+        color: #fff;
+        font-family: "Roboto", sans-serif; }
+    .side_menu .input-group .input-group-append {
+      position: absolute;
+      right: 10px;
+      top: 47%;
+      transform: translateY(-50%);
+      z-index: 4; }
+      .side_menu .input-group .input-group-append .btn-outline-secondary {
+        border: none;
+        border-radius: 0px;
+        color: #fff;
+        padding: 0px; }
+  .side_menu .menu_right {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    max-height: 420px; }
+    .side_menu .menu_right li {
+      margin-bottom: 25px; }
+      @media (max-width: 1440px) {
+        .side_menu .menu_right li {
+          margin-bottom: 15px; } }
+      .side_menu .menu_right li:last-child {
+        margin-bottom: 0px; }
+      .side_menu .menu_right li a {
+        font-size: 12px;
+        font-family: "Roboto", sans-serif;
+        font-weight: bold;
+        color: #222222;
+        text-transform: uppercase; }
+      .side_menu .menu_right li ul {
+        display: none; }
+        .side_menu .menu_right li ul li {
+          text-align: right;
+          margin-bottom: 10px;
+          margin-left: 40px; }
+          .side_menu .menu_right li ul li a {
+            color: #222222;
+            text-transform: capitalize; }
+          .side_menu .menu_right li ul li:first-child {
+            margin-top: 10px; }
+          .side_menu .menu_right li ul li:hover a {
+            color: #222222; }
+
+
+.float-left {
+  float: left !important; }
+
+.float-right {
+  float: right !important; }
+
+.hero-wrap {
+  width: 100%;
+  height: 100%;
+  position: inherit;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top center;
+  position: relative; }
+  @media (max-width: 991.98px) {
+    .hero-wrap {
+      background-position: center center !important; } }
+  .hero-wrap .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    opacity: .2;
+    background: #000000; }
+  .hero-wrap.hero-wrap-2 {
+    height: 600px; }
+    .hero-wrap.hero-wrap-2 .overlay {
+      opacity: .6; }
+    .hero-wrap.hero-wrap-2 .slider-text {
+      height: 600px; }
+
+.mouse {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6em;
+  z-index: 99; }
+
+.mouse-icon {
+  width: 60px;
+  height: 60px;
+  border: 1px solid rgba(255, 255, 255, 0);
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  position: relative;
+  text-align: center;
+  margin: 0 auto;
+  display: block; }
+
+.mouse-wheel {
+  height: 30px;
+  margin: 2px auto 0;
+  display: block;
+  width: 30px;
+  background: transparent;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  -webkit-animation: 1.6s ease infinite wheel-up-down;
+  -moz-animation: 1.6s ease infinite wheel-up-down;
+  animation: 1.6s ease infinite wheel-up-down;
+  color: #fff;
+  font-size: 20px; }
+
+@-webkit-keyframes wheel-up-down {
+  0% {
+    margin-top: 2px;
+    opacity: 1; }
+  30% {
+    opacity: 1; }
+  100% {
+    margin-top: 20px;
+    opacity: 0; } }
+
+@-moz-keyframes wheel-up-down {
+  0% {
+    margin-top: 2px;
+    opacity: 1; }
+  30% {
+    opacity: 1; }
+  100% {
+    margin-top: 20px;
+    opacity: 0; } }
+
+@keyframes wheel-up-down {
+  0% {
+    margin-top: 2px;
+    opacity: 1; }
+  30% {
+    opacity: 1; }
+  100% {
+    margin-top: 20px;
+    opacity: 0; } }
+
+   
+    .s129 {
+      /*min-height: 100vh;*/
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-pack: center;
+          justify-content: center;
+      -ms-flex-align: center;
+          align-items: center;
+      font-family: 'Montserrat', sans-serif;
+      background-size: cover;
+      background-position: center center;
+      padding: 15px;
+    }
+    
+
+/* Wrapper */
+
+.wrapper {
+  background: #fff;
+  margin: 0 0 2em 0;
+  padding: 6em 0 6em 0;
+}
+
+  .wrapper.style2 {
+    padding-top: 0;
+  }
+/* Main */
+
+#main {
+  margin-bottom: 0;
+}
+
+  #main section:first-of-type {
+    padding-top: 2em;
+  }
+/* Container */
+
+@media (min-width: 2px) {
+  .wrapper.style2 {
+  margin-top: -10px; } }
+
+@media (min-width: 492px) {
+  .wrapper.style2 {
+  margin-top: -25px; } }  
+
+@media (min-width: 992px) {
+  .wrapper.style2 {
+  margin-top: -50px; } } 
+
+.imgcontainer {
+  margin: 0 auto;
+  max-width: 100%;
+  border-radius: 20px;
+  width: 900px;
+}
+
+  @media screen and (max-width: 900px) {
+
+    .imgcontainer {
+      width: 1200px;
+    }
+
+  }
+
+  @media screen and (max-width: 900px) {
+
+    .imgcontainer {
+      width: 100%;
+    }
+
+  }
+
+  @media screen and (max-width: 900px) {
+
+    .imgcontainer {
+      width: 100%;
+    }
+
+  }
+
+  @media screen and (max-width: 840px) {
+
+    .imgcontainer {
+      width: 100%;
+    }
+
+  }
+
+  @media screen and (max-width: 736px) {
+
+    .imgcontainer {
+      width: 100%;
+    }
+
+  }
+	.image {
+		position: relative;
+		display: inline-block;
+    border: 0;        
+    border-radius: 0.25rem;
+		outline: 0;
+	}
+
+		.image img {
+			display: block;
+			width: 100%;
+		}
+
+		.image.fit {
+			display: block;
+			width: 100%;
+		}
+
+		.image.featured {
+      display: block;
+			width: 100%;
+			margin: 0 0 4em 0;
+		}
+
+		.image.left {
+			float: left;
+			margin: 0 2em 2em 0;
+		}
+
+		.image.centered {
+			display: block;
+			margin: 0 0 2em 0;
+		}
+
+			.image.centered img {
+				margin: 0 auto;
+				width: auto;
+			}
