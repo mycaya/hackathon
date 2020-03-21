@@ -210,7 +210,7 @@ app.post('/memeshot', function (req, res, next) {
 
 
   //Switch - 1 means No Dupe mode is on
-  const nodup = 1;
+  const nodup = 2;
 
   const url = 'mongodb://localhost:27017'
   mongo.connect(url, (err, client) => {
